@@ -1,3 +1,9 @@
+words.txt
+# idea
+.idea/
+*.iml
+target/
+
 # Compiled class file
 *.class
 
