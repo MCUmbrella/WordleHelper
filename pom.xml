@@ -33,7 +33,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>vip.floatationdevice.wordlehelper.Main</mainClass>
+                            <mainClass>vip.floatationdevice.wordlehelper.CLI</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

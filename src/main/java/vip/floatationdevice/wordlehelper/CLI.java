@@ -1,25 +1,13 @@
 package vip.floatationdevice.wordlehelper;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
-public class Main
+import static vip.floatationdevice.wordlehelper.Common.*;
+
+public class CLI
 {
-    //regex: 5 letters
-    final static Pattern validWord = Pattern.compile("^[a-zA-Z]{5}$");
-    //regex: 5 letters, a space, 5 numbers
-    final static Pattern checkResult = Pattern.compile("^[a-zA-Z]{5} [0-2]{5}$");
-    //file: ./words.txt
-    final static File file = new File("words.txt");
-    //words remaining to be found
-    static ArrayList<String> words = new ArrayList<String>();
-    //how many times you want the program to try to find the word. Can be overridden by command line argument
-    static int maxTries = 6;
     //scanner for input
     final static Scanner s = new Scanner(System.in);
 
@@ -28,10 +16,7 @@ public class Main
         System.out.println("WordleHelper Version 1.0");
         try
         {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            for (String line = reader.readLine(); line != null; line = reader.readLine()) //put matched words into the ArrayList
-                if (validWord.matcher(line).find()) words.add(line.toLowerCase());
-            reader.close();
+            Common.readDictionary();
         }
         catch (Exception e)
         {
@@ -51,7 +36,6 @@ public class Main
                 e.printStackTrace();
                 System.exit(-1);
             }
-        System.out.println("Dictionary size: " + words.size());
         System.out.println(
                 "Enter a Wordle check result with 5 letters, a space and 5 numbers from 0 to 2.\n" +
                 "Example: apple 01002\n" +

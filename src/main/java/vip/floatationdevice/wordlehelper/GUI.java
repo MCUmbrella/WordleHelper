@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-import static vip.floatationdevice.wordlehelper.Main.*;
+import static vip.floatationdevice.wordlehelper.Common.*;
 
 public class GUI extends JFrame
 {
@@ -37,13 +37,13 @@ public class GUI extends JFrame
     //acceptable chars: 0-2, a-z, backspace
     char[] acceptableChars = "abcdefghijklmnopqrstuvwxyz012\b".toCharArray();
     //possible words field
-    private final JTextArea possibleWords=new JTextArea("Possible words will be shown here\nEnter your first 5 letters and then 5 numbers to see them\nPress the '?' button on the bottom left for help");
+    private final JTextArea possibleWords=new JTextArea("Possible words will be shown here\nEnter 5 letters and then 5 numbers to update them\nPress the '?' button to see help message\nPress the 'R' button to reset the program\n\n");
     //result board, 6 lines, 5 letters each line
     private final JLabel[][] board=new JLabel[6][5];
     //tries status
     private final JLabel tries=new JLabel("Try {}/6");
     //'words left' status
-    private final JLabel wordsLeft=new JLabel("{} words left");
+    private final JLabel wordsLeft=new JLabel();
     //[?] button that shows the help message
     private final JButton help=new JButton("?");
     //[R] button that resets the board, the tries and the possible words
@@ -90,18 +90,39 @@ public class GUI extends JFrame
         if(!startupComplete)
         {
             //show a startup window
-            startup.setSize(200,50);
-            startup.setLocationRelativeTo(null);
-            startup.setUndecorated(true);
-            startup.setAlwaysOnTop(true);
-            startup.setResizable(false);
             JLabel startupText = new JLabel("Starting WordleHelper...");
             startupText.setHorizontalAlignment(SwingConstants.CENTER);
             startup.add(startupText);
+            startup.setSize(200,50);
+            startup.setLocationRelativeTo(null);
+            startup.setUndecorated(true);
+            startup.setResizable(false);
+            startup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             startup.setVisible(true);
             /*try {
                 Thread.sleep(1000); //magic, don't touch
             }catch (InterruptedException e){}*/
+        }
+        //load dictionary
+        try
+        {
+            readDictionary();
+            wordsLeft.setText(words.size() + " words left");
+            //show all words at first
+            possibleWords.append(words.toString());
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error loading dictionary:");
+            e.printStackTrace();
+            //show error window
+            JOptionPane.showMessageDialog(null,
+                    "Error loading dictionary: "+e.getMessage()+
+                    "\nHave you put it under your workdir?\nYou can get the file from 'https://github.com/MCUmbrella/AWordle/tree/main/dictionary'",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            System.exit(-1);
         }
 
         //set main window
@@ -127,16 +148,14 @@ public class GUI extends JFrame
         possibleWords.setBounds(270,10,360,420);
         possibleWords.setEditable(false);
         possibleWords.setLineWrap(true);
-        //set color
-        possibleWords.setBackground(Color.GRAY);
+        possibleWords.setWrapStyleWord(true);
+        possibleWords.setBackground(new Color(96,96,96));
         possibleWords.setForeground(Color.WHITE);
         //set help and reset button
         help.setBounds(10,400,50,30);
         reset.setBounds(70,400,50,30);
         //set global key event listener
-        //help.addKeyListener(boardKeyListener);
-        KeyboardFocusManager.getCurrentKeyboardFocusManager()
-                .addKeyEventDispatcher(keyEventDispatcher);
+        if (!startupComplete) KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
         //set help button's action listener
         help.addActionListener(new ActionListener()
         {
@@ -164,6 +183,7 @@ public class GUI extends JFrame
             public void actionPerformed(ActionEvent e)
             {
                 System.out.println("resetting");
+                words.clear();
                 dispose();
                 new GUI();
             }
