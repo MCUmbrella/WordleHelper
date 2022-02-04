@@ -1,5 +1,6 @@
 # WordleHelper
  A program that helps you beat the Wordle game
+![screenshot](https://pbs.twimg.com/media/FKxZtJRVEAQ4pBa?format=jpg&name=large)
 ## Usage:
 ```shell
 java -jar WordleHelper.jar [-c [maxTries]]
