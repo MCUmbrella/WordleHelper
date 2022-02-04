@@ -1,6 +1,5 @@
 package vip.floatationdevice.wordlehelper;
 
-import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -13,7 +12,6 @@ public class CLI
 
     public static void main(String[] args)
     {
-        System.out.println("WordleHelper Version 1.0");
         try
         {
             Common.readDictionary();
@@ -24,10 +22,10 @@ public class CLI
             e.printStackTrace();
             System.exit(-1);
         }
-        if (args.length != 0)
+        if (args.length > 1)
             try
             {
-                maxTries = Integer.parseInt(args[0]);
+                maxTries = Integer.parseInt(args[1]);
                 if(maxTries < 1) throw new NumberFormatException();
             }
             catch (Exception e)
@@ -50,55 +48,26 @@ public class CLI
             {
                 System.out.print("Enter check result (try " + (i + 1) + "/" + maxTries + "): ");
                 String input = s.nextLine();
-                if(checkResult.matcher(input).find() && words.contains(input.substring(0, 5))) //if the input is valid
+                if(checkResult.matcher(input).find() && possibleWordsList.contains(input.substring(0, 5))) //if the input is valid
                 {
                     String inputWord = input.substring(0, 5);
                     int[] result = new int[5];
                     for(int j = 0; j != 5; j++) result[j] = Integer.parseInt(input.substring(j + 6, j + 7));
-                    for (int loc = 0; loc != 5; loc++)
+                    calculatePossibleWords(inputWord, result);
+                    if(possibleWordsList.size() == 0)
                     {
-                        switch (result[loc])
-                        {
-                            case 2://the char is in another location
-                            {
-                                //keep the words that have the char
-                                ArrayList<String> temp = new ArrayList<String>();
-                                for (String word : words) if (word.contains(inputWord.charAt(loc)+"")) temp.add(word);
-                                words = temp;
-                                break;
-                            }
-                            case 1://the char is in the right location
-                            {
-                                //keep the words that have the same char at the same location
-                                ArrayList<String> temp = new ArrayList<String>();
-                                for (String word : words) if (word.charAt(loc) == inputWord.charAt(loc)) temp.add(word);
-                                words = temp;
-                                break;
-                            }
-                            case 0://the char is not in the answer word
-                            {
-                                //remove the words that have the same char that is not matched
-                                ArrayList<String> temp = new ArrayList<String>();
-                                for (String word : words) if (!word.contains(inputWord.charAt(loc)+"")) temp.add(word);
-                                words = temp;
-                                break;
-                            }
-                        }
-                    }
-                    if(words.size() == 0)
-                    {
-                        System.out.println("No words left! Is there something wrong with the program or your input?");
+                        System.out.println("No words left!\nIs there a:\n  · problem with your input?\n  · word that is not in the dictionary?\n  · bug in the program?");
                         System.exit(0);
                     }
-                    else if (words.size() == 1)
+                    else if (possibleWordsList.size() == 1)
                     {
-                        System.out.println("The word is: " + words.get(0));
+                        System.out.println("The word is: " + possibleWordsList.get(0));
                         System.exit(0);
                     }
                     else
                     {
-                        System.out.println("Possible words: " + words);
-                        System.out.println("Words left: " + words.size());
+                        System.out.println("Possible words: " + possibleWordsList);
+                        System.out.println("Words left: " + possibleWordsList.size());
                     }
                     i++;
                 }
