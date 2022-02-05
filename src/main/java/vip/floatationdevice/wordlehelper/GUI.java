@@ -279,7 +279,7 @@ public class GUI extends JFrame
         }
 
         //set main window
-        setTitle("WordleHelper 2.0");
+        setTitle(PROGRAM_NAME);
         setSize(640,480);
         setResizable(false);
         setLocationRelativeTo(null);
