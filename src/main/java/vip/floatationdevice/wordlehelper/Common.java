@@ -41,6 +41,7 @@ public class Common
     //calculate the possible words
     public static void calculatePossibleWords(String inputWord, int[] result)
     {
+        String inputWordLower = inputWord.toLowerCase();
         for (int loc = 0; loc != 5; loc++)
         {
             switch (result[loc])
@@ -49,7 +50,7 @@ public class Common
                 {
                     //keep the words that have the char
                     ArrayList<String> temp = new ArrayList<String>();
-                    for (String word : possibleWordsList) if (word.contains(inputWord.charAt(loc)+"")) temp.add(word);
+                    for (String word : possibleWordsList) if (word.contains(inputWordLower.charAt(loc)+"")) temp.add(word);
                     possibleWordsList = temp;
                     break;
                 }
@@ -57,7 +58,7 @@ public class Common
                 {
                     //keep the words that have the same char at the same location
                     ArrayList<String> temp = new ArrayList<String>();
-                    for (String word : possibleWordsList) if (word.charAt(loc) == inputWord.charAt(loc)) temp.add(word);
+                    for (String word : possibleWordsList) if (word.charAt(loc) == inputWordLower.charAt(loc)) temp.add(word);
                     possibleWordsList = temp;
                     break;
                 }
@@ -65,7 +66,7 @@ public class Common
                 {
                     //remove the words that have the same char that is not matched
                     ArrayList<String> temp = new ArrayList<String>();
-                    for (String word : possibleWordsList) if (!word.contains(inputWord.charAt(loc)+"")) temp.add(word);
+                    for (String word : possibleWordsList) if (!word.contains(inputWordLower.charAt(loc)+"")) temp.add(word);
                     possibleWordsList = temp;
                     break;
                 }

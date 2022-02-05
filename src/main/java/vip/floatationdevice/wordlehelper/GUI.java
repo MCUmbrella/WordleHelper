@@ -85,7 +85,7 @@ public class GUI extends JFrame
                 sb.append(board[line][i].getText());
             else return null;
         }
-        return sb.toString();
+        return sb.toString().toLowerCase();
     }
 
     //get the numbers of the current line

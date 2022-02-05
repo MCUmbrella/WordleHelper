@@ -47,7 +47,7 @@ public class CLI
             for(int i = 0; i != maxTries;)
             {
                 System.out.print("Enter check result (try " + (i + 1) + "/" + maxTries + "): ");
-                String input = s.nextLine();
+                String input = s.nextLine().toLowerCase();
                 if(checkResult.matcher(input).find() && possibleWordsList.contains(input.substring(0, 5))) //if the input is valid
                 {
                     String inputWord = input.substring(0, 5);

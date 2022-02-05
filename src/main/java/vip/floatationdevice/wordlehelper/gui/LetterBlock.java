@@ -13,12 +13,18 @@ public class LetterBlock extends JLabel
     public LetterBlock()
     {
         setText("_");
+        setFont(new Font(getFont().getName(), Font.BOLD, getFont().getSize() + 10));
         setNumber(-1);
         setHorizontalAlignment(JLabel.CENTER);
         setBackground(COLOR_UNSET);
         setForeground(Color.WHITE);
         setOpaque(true);
     }
+
+    public int getNumber() {return number;}
+
+    @Override
+    public void setText(String text) {super.setText(text.toUpperCase());}
 
     public void setNumber(int number)
     {
@@ -47,5 +53,4 @@ public class LetterBlock extends JLabel
             }
         }
     }
-    public int getNumber() {return number;}
 }
