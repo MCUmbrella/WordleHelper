@@ -14,11 +14,12 @@ public class CLI
     {
         try
         {
-            Common.readDictionary();
+            Common.readAnswerWords();
+            Common.readAllWords();
         }
         catch (Exception e)
         {
-            System.out.println("Failed to read 'words.txt'. Have you put it under your workdir?\nYou can get the file from 'https://github.com/MCUmbrella/AWordle/tree/main/dictionary'");
+            System.out.println("Please check the dictionary file path.\nMake sure 'common.txt' and 'all.txt' are\n in 'resources' folder or in the jar file.");
             e.printStackTrace();
             System.exit(-1);
         }
@@ -48,26 +49,26 @@ public class CLI
             {
                 System.out.print("Enter check result (try " + (i + 1) + "/" + maxTries + "): ");
                 String input = s.nextLine().toLowerCase();
-                if(checkResult.matcher(input).find() && possibleWordsList.contains(input.substring(0, 5))) //if the input is valid
+                if(checkResult.matcher(input).find() && answerWordsList.contains(input.substring(0, 5))) //if the input is valid
                 {
                     String inputWord = input.substring(0, 5);
                     int[] result = new int[5];
                     for(int j = 0; j != 5; j++) result[j] = Integer.parseInt(input.substring(j + 6, j + 7));
                     calculatePossibleWords(inputWord, result);
-                    if(possibleWordsList.size() == 0)
+                    if(answerWordsList.size() == 0)
                     {
                         System.out.println("No words left!\nIs there a:\n  · problem with your input?\n  · word that is not in the dictionary?\n  · bug in the program?");
                         System.exit(0);
                     }
-                    else if (possibleWordsList.size() == 1)
+                    else if (answerWordsList.size() == 1)
                     {
-                        System.out.println("The word is: " + possibleWordsList.get(0));
+                        System.out.println("The word is: " + answerWordsList.get(0));
                         System.exit(0);
                     }
                     else
                     {
-                        System.out.println("Possible words: " + possibleWordsList);
-                        System.out.println("Words left: " + possibleWordsList.size());
+                        System.out.println("Possible words: " + answerWordsList);
+                        System.out.println("Words left: " + answerWordsList.size());
                     }
                     i++;
                 }

@@ -79,12 +79,7 @@ public class GUI extends JFrame
     private String getWord(int line)
     {
         StringBuilder sb=new StringBuilder();
-        for(int i=0;i!=5;i++)
-        {
-            if(!board[line][i].getText().equals("_"))
-                sb.append(board[line][i].getText());
-            else return null;
-        }
+        for(int i=0;i!=5;i++) sb.append(board[line][i].getText());
         return sb.toString().toLowerCase();
     }
 
@@ -118,7 +113,8 @@ public class GUI extends JFrame
     {
         System.out.println("resetting");
         KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(keyEventDispatcher);
-        possibleWordsList.clear();
+        answerWordsList.clear();
+        allWordsList.clear();
         dispose();
         new GUI();
     }
@@ -152,10 +148,10 @@ public class GUI extends JFrame
                                         //update the possible words
                                         System.out.println("update possible words: "+getWord(letterIndexLine)+" "+ Arrays.toString(getResultNumbers(numberIndexLine)));
                                         calculatePossibleWords(getWord(letterIndexLine), getResultNumbers(numberIndexLine));
-                                        possibleWordsField.setText("Possible words:\n"+possibleWordsList);
-                                        wordsLeftLabel.setText("Words left: "+possibleWordsList.size());
+                                        possibleWordsField.setText("Possible words:\n"+answerWordsList);
+                                        wordsLeftLabel.setText("Words left: "+answerWordsList.size());
                                         //if ArrayList is empty, the game is over
-                                        if(possibleWordsList.size()==0)
+                                        if(answerWordsList.size()==0)
                                         {
                                             System.out.println("no words left");
                                             JOptionPane.showMessageDialog(null,
@@ -168,11 +164,11 @@ public class GUI extends JFrame
                                             resetGUI();
                                         }
                                         //if ArrayList has only one word, that word is the result
-                                        else if(possibleWordsList.size()==1)
+                                        else if(answerWordsList.size()==1)
                                         {
-                                            System.out.println("only one word left: "+possibleWordsList.get(0));
+                                            System.out.println("only one word left: "+answerWordsList.get(0));
                                             JOptionPane.showMessageDialog(null,
-                                                    "The word we are finding is:\n  · "+possibleWordsList.get(0)+"\nThe program will reset",
+                                                    "The word we are finding is:\n\n  · "+answerWordsList.get(0)+"\n\nThe program will reset",
                                                     "Congratulations!",
                                                     JOptionPane.INFORMATION_MESSAGE
                                             );
@@ -221,7 +217,7 @@ public class GUI extends JFrame
                                 letterIndexColumn++;
                                 if(letterIndexColumn==5)//check if the word is in the dictionary
                                 {
-                                    if(possibleWordsList.contains(getWord(letterIndexLine)))
+                                    if(allWordsList.contains(getWord(letterIndexLine)))
                                     {
                                         //move to the first letter and start setting the numbers
                                         letterIndexColumn=0;
@@ -256,23 +252,25 @@ public class GUI extends JFrame
             /*try {Thread.sleep(1000); //magic, don't touch
             }catch (InterruptedException e){e.printStackTrace();System.exit(-1);}*/
         }
-        //load dictionary
+        //load answer dictionary and all words dictionary
         try
         {
-            readDictionary();
-            wordsLeftLabel.setText(possibleWordsList.size() + " words left");
+            readAnswerWords();
+            readAllWords();
+            wordsLeftLabel.setText(answerWordsList.size() + " words left");
             //show all words at first
-            possibleWordsField.append(possibleWordsList.toString());
+            possibleWordsField.append(answerWordsList.toString());
         }
         catch (Exception e)
         {
+            startupWindow.dispose();
             System.out.println("Error loading dictionary:");
             e.printStackTrace();
             //show error window
             JOptionPane.showMessageDialog(null,
-                    "Error loading dictionary: "+e.getMessage()+
-                    "\nHave you put it under your workdir?\nYou can get the file from 'https://github.com/MCUmbrella/AWordle/tree/main/dictionary'",
-                    "Error",
+                    e+
+                    "\n\nPlease check the dictionary file path.\nMake sure 'common.txt' and 'all.txt' are\n in 'resources' folder or in the jar file.",
+                    "Error loading dictionary",
                     JOptionPane.ERROR_MESSAGE
             );
             System.exit(-1);
