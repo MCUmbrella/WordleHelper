@@ -57,7 +57,7 @@ public class GUI extends JFrame
     //tries status
     private final JLabel triesLabel=new JLabel("Try 0 / 6");
     //tries counter
-    private int tries=1;
+    private int tries=0;
     //'words left' status
     private final JLabel wordsLeftLabel=new JLabel();
     //[?] button that shows the help message
@@ -79,7 +79,12 @@ public class GUI extends JFrame
     private String getWord(int line)
     {
         StringBuilder sb=new StringBuilder();
-        for(int i=0;i!=5;i++) sb.append(board[line][i].getText());
+        for(int i=0;i!=5;i++)
+        {
+            if(!board[line][i].getText().equals("_"))
+                sb.append(board[line][i].getText());
+            else return null;
+        }
         return sb.toString().toLowerCase();
     }
 
@@ -166,6 +171,7 @@ public class GUI extends JFrame
                                         //if ArrayList has only one word, that word is the result
                                         else if(answerWordsList.size()==1)
                                         {
+                                            triesLabel.setText("Try " + ++tries + " / "+"6");
                                             System.out.println("only one word left: "+answerWordsList.get(0));
                                             JOptionPane.showMessageDialog(null,
                                                     "The word we are finding is:\n\n  · "+answerWordsList.get(0)+"\n\nThe program will reset",
@@ -180,8 +186,8 @@ public class GUI extends JFrame
                                             letterIndexColumn=0;
                                             numberIndexLine++;
                                             letterIndexLine++;
-                                            triesLabel.setText("Try "+tries+" / "+"6");
-                                            tries++;
+                                            triesLabel.setText("Try " + ++tries + " / "+"6");
+                                            //tries++;
                                         }
                                         //if the last line is reached, the game is over
                                         if(numberIndexLine==6)
