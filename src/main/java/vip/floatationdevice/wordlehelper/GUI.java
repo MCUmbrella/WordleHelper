@@ -43,7 +43,7 @@ public class GUI extends JFrame
     //acceptable chars: 0-2, a-z, backspace
     char[] acceptableChars = "abcdefghijklmnopqrstuvwxyz012\b".toCharArray();
     //possible words field
-    private final JTextArea possibleWords=new JTextArea("Possible words will be shown here\nEnter 5 letters and then 5 numbers to update them\nPress the '?' button to see help message\nPress the 'R' button to reset the program\n\n");
+    private final JTextArea possibleWordsField=new JTextArea("Possible words will be shown here\nEnter 5 letters and then 5 numbers to update them\nPress the '?' button to see help message\nPress the 'R' button to reset the program\n\n");
     //result board
     JPanel resultBoard=new JPanel(null);
     //all letter blocks for the result board, 6 lines, 5 letters each line
@@ -59,7 +59,7 @@ public class GUI extends JFrame
     //tries counter
     private int tries=1;
     //'words left' status
-    private final JLabel wordsLeft=new JLabel();
+    private final JLabel wordsLeftLabel=new JLabel();
     //[?] button that shows the help message
     private final JButton helpButton=new JButton("?");
     //[R] button that resets the board, the tries and the possible words
@@ -152,8 +152,8 @@ public class GUI extends JFrame
                                         //update the possible words
                                         System.out.println("update possible words: "+getWord(letterIndexLine)+" "+ Arrays.toString(getResultNumbers(numberIndexLine)));
                                         calculatePossibleWords(getWord(letterIndexLine), getResultNumbers(numberIndexLine));
-                                        possibleWords.setText("Possible words:\n"+possibleWordsList);
-                                        wordsLeft.setText("Words left: "+possibleWordsList.size());
+                                        possibleWordsField.setText("Possible words:\n"+possibleWordsList);
+                                        wordsLeftLabel.setText("Words left: "+possibleWordsList.size());
                                         //if ArrayList is empty, the game is over
                                         if(possibleWordsList.size()==0)
                                         {
@@ -260,9 +260,9 @@ public class GUI extends JFrame
         try
         {
             readDictionary();
-            wordsLeft.setText(possibleWordsList.size() + " words left");
+            wordsLeftLabel.setText(possibleWordsList.size() + " words left");
             //show all words at first
-            possibleWords.append(possibleWordsList.toString());
+            possibleWordsField.append(possibleWordsList.toString());
         }
         catch (Exception e)
         {
@@ -294,15 +294,15 @@ public class GUI extends JFrame
         triesLabel.setBounds(10,330,100,20);
         triesLabel.setForeground(Color.WHITE);
         //set words left status
-        wordsLeft.setBounds(110,330,100,20);
-        wordsLeft.setForeground(Color.WHITE);
+        wordsLeftLabel.setBounds(110,330,100,20);
+        wordsLeftLabel.setForeground(Color.WHITE);
         //set possible words field
-        possibleWords.setBounds(270,10,360,420);
-        possibleWords.setEditable(false);
-        possibleWords.setLineWrap(true);
-        possibleWords.setWrapStyleWord(true);
-        possibleWords.setBackground(new Color(96,96,96));
-        possibleWords.setForeground(Color.WHITE);
+        possibleWordsField.setBounds(270,10,360,420);
+        possibleWordsField.setEditable(false);
+        possibleWordsField.setLineWrap(true);
+        possibleWordsField.setWrapStyleWord(true);
+        possibleWordsField.setBackground(new Color(96,96,96));
+        possibleWordsField.setForeground(Color.WHITE);
         //set help and reset button
         helpButton.setBounds(10,400,50,30);
         resetButton.setBounds(70,400,50,30);
@@ -339,8 +339,8 @@ public class GUI extends JFrame
         });
         //add components
         resultBoard.add(triesLabel);
-        resultBoard.add(wordsLeft);
-        resultBoard.add(possibleWords);
+        resultBoard.add(wordsLeftLabel);
+        resultBoard.add(possibleWordsField);
         resultBoard.add(helpButton);
         resultBoard.add(resetButton);
         for(int i=0;i<6;i++)

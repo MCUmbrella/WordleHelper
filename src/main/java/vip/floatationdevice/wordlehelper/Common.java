@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class Common
 {
-    public final static String PROGRAM_NAME = "WordleHelper 2.0.1";
+    public final static String PROGRAM_NAME = "WordleHelper 2.1";
 
     //regex: 5 letters
     public final static Pattern validWord = Pattern.compile("^[a-zA-Z]{5}$");
@@ -42,6 +42,10 @@ public class Common
     public static void calculatePossibleWords(String inputWord, int[] result)
     {
         String inputWordLower = inputWord.toLowerCase();
+        //remove this word if result isn't [1, 1, 1, 1, 1]
+        //to prevent a possible bug
+        if (!(result[0] == 1 && result[1] == 1 && result[2] == 1 && result[3] == 1 && result[4] == 1))
+            possibleWordsList.remove(inputWordLower);
         for (int loc = 0; loc != 5; loc++)
         {
             switch (result[loc])
