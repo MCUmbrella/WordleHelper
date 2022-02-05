@@ -1,6 +1,7 @@
 # WordleHelper
  A program that helps you beat the Wordle game
-![screenshot](https://user-images.githubusercontent.com/40854260/152629544-637bc6f2-4548-48c1-9069-c64ff1bf81e1.png)
+
+![screenshot](https://user-images.githubusercontent.com/40854260/152649437-2e52d744-5fd9-4a60-b91c-cf7af53a4ae4.png)
 
 ## Usage:
 ```shell
