@@ -1,6 +1,6 @@
 ##################################################
 # Wordle dictionary: all words
-# Update: 2022-01-30
+# Update: 2022-02-11
 ##################################################
 cigar
 rebut
@@ -243,11 +243,9 @@ ulcer
 ultra
 robin
 cynic
-agora
 aroma
 caulk
 shake
-pupal
 dodge
 swill
 tacit
@@ -276,7 +274,6 @@ smelt
 tease
 cater
 movie
-lynch
 saute
 allow
 renew
@@ -297,7 +294,6 @@ trope
 fewer
 shawl
 natal
-fibre
 comma
 foray
 scare
@@ -307,7 +303,6 @@ squad
 royal
 chunk
 mince
-slave
 shame
 cheek
 ample
@@ -398,7 +393,6 @@ fluff
 hydro
 flack
 agape
-wench
 voice
 stead
 stalk
@@ -2317,6 +2311,7 @@ rower
 artsy
 rural
 shave
+
 aahed
 aalii
 aargh
@@ -3233,7 +3228,6 @@ birsy
 bises
 bisks
 bisom
-bitch
 biter
 bites
 bitos
@@ -3881,7 +3875,6 @@ chimo
 chimp
 chine
 ching
-chink
 chino
 chins
 chips
@@ -4137,7 +4130,6 @@ cooly
 coomb
 cooms
 coomy
-coons
 coops
 coopt
 coost
@@ -4420,7 +4412,6 @@ dargs
 daric
 daris
 darks
-darky
 darns
 darre
 darts
@@ -4940,9 +4931,6 @@ dwile
 dwine
 dyads
 dyers
-dyked
-dykes
-dykey
 dykon
 dynel
 dynes
@@ -5195,9 +5183,7 @@ faena
 faery
 faffs
 faffy
-faggy
 fagin
-fagot
 faiks
 fails
 faine
@@ -5969,7 +5955,6 @@ gooby
 goods
 goofs
 googs
-gooks
 gooky
 goold
 gools
@@ -6449,7 +6434,6 @@ homes
 homey
 homie
 homme
-homos
 honan
 honda
 honds
@@ -7071,7 +7055,6 @@ kiers
 kieve
 kievs
 kight
-kikes
 kikoi
 kiley
 kilim
@@ -7429,7 +7412,6 @@ lepta
 lered
 leres
 lerps
-lesbo
 leses
 lests
 letch
@@ -9525,7 +9507,6 @@ pursy
 purty
 puses
 pusle
-pussy
 putid
 puton
 putti
@@ -10769,7 +10750,6 @@ slums
 slurb
 slurs
 sluse
-sluts
 slyer
 slype
 smaak
@@ -11014,14 +10994,11 @@ spews
 spewy
 spial
 spica
-spick
-spics
 spide
 spier
 spies
 spiff
 spifs
-spiks
 spile
 spims
 spina
@@ -12542,7 +12519,6 @@ whomp
 whoof
 whoot
 whops
-whore
 whorl
 whort
 whoso
