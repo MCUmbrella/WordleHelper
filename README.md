@@ -11,3 +11,6 @@ Or just double-click the program icon to launch the program in GUI mode.
 ### Options:
 * `-c`: Launch the program in command line mode (GUI mode by default).
 * `maxTries`: The maximum number of tries to find the word (only in CLI mode).<br>
+## Download:
+- ['Releases' page](https://github.com/MCUmbrella/WordleHelper/releases)
+- [Development builds](https://github.com/MCUmbrella/WordleHelper/actions/workflows/maven.yml)
