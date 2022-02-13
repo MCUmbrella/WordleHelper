@@ -362,6 +362,8 @@ public class GUI extends JFrame
 
     public static void main(String[] args)
     {
+        long startTime=System.currentTimeMillis();
         new GUI().setVisible(true);
+        System.out.println("Startup time: "+(System.currentTimeMillis()-startTime)+"ms");
     }
 }

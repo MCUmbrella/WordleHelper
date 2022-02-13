@@ -17,10 +17,10 @@ public class Common
     public final static String answerWordsFile = "/common.txt";
     //file: all words file 'all.txt' in the jar
     public final static String allWordsFile = "/all.txt";
-    //possible answer words
-    public static ArrayList<String> answerWordsList = new ArrayList<String>();
-    //all accepted words
-    public static ArrayList<String> allWordsList = new ArrayList<String>();
+    //possible answer words (from common.txt)
+    public static ArrayList<String> answerWordsList = new ArrayList<String>(2500);
+    //all accepted words (from all.txt)
+    public static ArrayList<String> allWordsList = new ArrayList<String>(13000);
     //how many times you want the program to try to find the word. Can be overridden by command line argument
     public static int maxTries = 6;
     //wordle letter block background colors
@@ -65,10 +65,10 @@ public class Common
     public static void calculatePossibleWords(String inputWord, int[] result)
     {
         String inputWordLower = inputWord.toLowerCase();
-        //remove this word if result isn't [1, 1, 1, 1, 1]
-        //to prevent a possible bug
+        //remove the word that have been identified as not being the answer
         if (!(result[0] == 1 && result[1] == 1 && result[2] == 1 && result[3] == 1 && result[4] == 1))
             answerWordsList.remove(inputWordLower);
+        //calculation begins
         for (int loc = 0; loc != 5; loc++)
         {
             switch (result[loc])
@@ -76,7 +76,7 @@ public class Common
                 case 2://the char is in another location
                 {
                     //keep the words that have the char
-                    ArrayList<String> temp = new ArrayList<String>();
+                    ArrayList<String> temp = new ArrayList<String>(2000);
                     for (String word : answerWordsList) if (word.contains(inputWordLower.charAt(loc)+"")) temp.add(word);
                     answerWordsList = temp;
                     break;
@@ -84,7 +84,7 @@ public class Common
                 case 1://the char is in the right location
                 {
                     //keep the words that have the same char at the same location
-                    ArrayList<String> temp = new ArrayList<String>();
+                    ArrayList<String> temp = new ArrayList<String>(2000);
                     for (String word : answerWordsList) if (word.charAt(loc) == inputWordLower.charAt(loc)) temp.add(word);
                     answerWordsList = temp;
                     break;
@@ -92,7 +92,7 @@ public class Common
                 case 0://the char is not in the answer word
                 {
                     //remove the words that have the same char that is not matched
-                    ArrayList<String> temp = new ArrayList<String>();
+                    ArrayList<String> temp = new ArrayList<String>(2000);
                     for (String word : answerWordsList) if (!word.contains(inputWordLower.charAt(loc)+"")) temp.add(word);
                     answerWordsList = temp;
                     break;
