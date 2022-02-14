@@ -3,6 +3,7 @@ package vip.floatationdevice.wordlehelper;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.regex.Pattern;
 
 public class Common
@@ -78,6 +79,9 @@ public class Common
                     //keep the words that have the char
                     ArrayList<String> temp = new ArrayList<String>(2000);
                     for (String word : answerWordsList) if (word.contains(inputWordLower.charAt(loc)+"")) temp.add(word);
+                    //and remove the words that have the char in this location
+                    for(Iterator<String> it = temp.iterator(); it.hasNext();)
+                        if (it.next().charAt(loc) == inputWordLower.charAt(loc)) it.remove();
                     answerWordsList = temp;
                     break;
                 }
