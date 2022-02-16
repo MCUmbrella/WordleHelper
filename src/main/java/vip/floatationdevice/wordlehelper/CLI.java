@@ -2,6 +2,7 @@ package vip.floatationdevice.wordlehelper;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import static vip.floatationdevice.wordlehelper.Common.*;
 
@@ -9,6 +10,10 @@ public class CLI
 {
     //scanner for input
     final static Scanner s = new Scanner(System.in);
+    //regex: 5 letters, a space, 5 numbers
+    private final static Pattern checkResult = Pattern.compile("^[a-zA-Z]{5} [0-2]{5}$");
+    //how many times you want the program to try to find the word. Can be overridden by command line argument
+    public static int maxTries = 6;
 
     public static void main(String[] args)
     {

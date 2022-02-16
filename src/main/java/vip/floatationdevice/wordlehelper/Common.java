@@ -12,8 +12,6 @@ public class Common
 
     //regex: 5 letters
     public final static Pattern validWord = Pattern.compile("^[a-zA-Z]{5}$");
-    //regex: 5 letters, a space, 5 numbers
-    public final static Pattern checkResult = Pattern.compile("^[a-zA-Z]{5} [0-2]{5}$");
     //file: answer words file 'common.txt' in the jar
     public final static String answerWordsFile = "/common.txt";
     //file: all words file 'all.txt' in the jar
@@ -22,8 +20,6 @@ public class Common
     public static ArrayList<String> answerWordsList = new ArrayList<String>(2500);
     //all accepted words (from all.txt)
     public static ArrayList<String> allWordsList = new ArrayList<String>(13000);
-    //how many times you want the program to try to find the word. Can be overridden by command line argument
-    public static int maxTries = 6;
     //wordle letter block background colors
     public final static Color
             COLOR_UNSET = new Color(0x121213),

@@ -31,19 +31,32 @@ public class GUI extends JFrame
     * +-----------+-------------------+
     * | Try {}/6  | {} words left [?] |
     * +-------------------------------+
-    *
-    * Help:
-    *   Each line accepts first 5 letters and then 5 numbers from 0 to 2.
-    *   After the 5th number is typed the possible words will be calculated.
-    *   Clear a line by pressing the backspace key.
     */
 
+    //help message
+    private final static String helpText=
+                    "Each line accepts first 5 letters and then 5 numbers from 0 to 2.\n" +
+                    "After the 5th number is typed the possible words will be calculated.\n" +
+                    "Clear a line by pressing the backspace key.\n\n" +
+                    "· 0 means the letter is not in the word,\n" +
+                    "· 1 means the letter is at the right position,\n" +
+                    "· 2 means the letter is in the wrong position.";
+    //default text for possible words field
+    private final static String initText=
+                    "Possible words will be shown here\n" +
+                    "Enter 5 letters and then 5 numbers to update them\n" +
+                    "Press the '?' button to see help message\n" +
+                    "Press the 'R' button to reset the program\n\n";
+    //acceptable chars: 0-2, a-z, backspace
+    private final static char[] acceptableChars={
+            'a','b','c','d','e','f','g','h','i','j',
+            'k','l','m','n','o','p','q','r','s','t',
+            'u','v','w','x','y','z','0','1','2','\b'
+    };
     //startup status
     static boolean startupComplete = false;
-    //acceptable chars: 0-2, a-z, backspace
-    char[] acceptableChars = "abcdefghijklmnopqrstuvwxyz012\b".toCharArray();
     //possible words field
-    private final JTextArea possibleWordsField=new JTextArea("Possible words will be shown here\nEnter 5 letters and then 5 numbers to update them\nPress the '?' button to see help message\nPress the 'R' button to reset the program\n\n");
+    private final JTextArea possibleWordsField=new JTextArea(initText);
     //result board
     JPanel resultBoard=new JPanel(null);
     //all letter blocks for the result board, 6 lines, 5 letters each line
@@ -250,7 +263,6 @@ public class GUI extends JFrame
     public GUI()
     {
         StartupWindow startupWindow = new StartupWindow();
-        try{UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch(Throwable ex){System.out.println("Error setting native LAF: "+ex);}
         if(!startupComplete)
         {
             //show a startup window
@@ -322,12 +334,7 @@ public class GUI extends JFrame
                 System.out.println("help button pressed");
                 //show help dialog
                 JOptionPane.showMessageDialog(GUI.this,
-                        "Each line accepts first 5 letters and then 5 numbers from 0 to 2.\n" +
-                        "After the 5th number is typed the possible words will be calculated.\n" +
-                        "Clear a line by pressing the backspace key.\n\n" +
-                        "· 0 means the letter is not in the word,\n" +
-                        "· 1 means the letter is at the right position,\n" +
-                        "· 2 means the letter is in the wrong position.",
+                        helpText,
                         "Help",
                         JOptionPane.INFORMATION_MESSAGE);
             }
