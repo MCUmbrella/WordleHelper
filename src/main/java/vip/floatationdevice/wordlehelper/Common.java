@@ -20,12 +20,6 @@ public class Common
     public static ArrayList<String> answerWordsList = new ArrayList<String>(2500);
     //all accepted words (from all.txt)
     public static ArrayList<String> allWordsList = new ArrayList<String>(13000);
-    //wordle letter block background colors
-    public final static Color
-            COLOR_UNSET = new Color(0x121213),
-            COLOR_OFF_TARGETED = new Color(0x3a3a3c),
-            COLOR_DISPLACED = new Color(0xb59f3b),
-            COLOR_HIT = new Color(0x538d4e);
 
     //read words from 'common.txt' and store them in answerWordsList
     public static void readAnswerWords() throws Exception
@@ -42,6 +36,7 @@ public class Common
         is.close();
         System.out.println("Answer words dictionary size: " + answerWordsList.size());
     }
+
     //read words from 'all.txt' and store them in allWordsList
     public static void readAllWords() throws Exception
     {
@@ -74,9 +69,10 @@ public class Common
                 {
                     //keep the words that have the char
                     ArrayList<String> temp = new ArrayList<String>(2000);
-                    for (String word : answerWordsList) if (word.contains(inputWordLower.charAt(loc)+"")) temp.add(word);
+                    for (String word : answerWordsList)
+                        if (word.contains(inputWordLower.charAt(loc) + "")) temp.add(word);
                     //and remove the words that have the char in this location
-                    for(Iterator<String> it = temp.iterator(); it.hasNext();)
+                    for (Iterator<String> it = temp.iterator(); it.hasNext(); )
                         if (it.next().charAt(loc) == inputWordLower.charAt(loc)) it.remove();
                     answerWordsList = temp;
                     break;
@@ -85,7 +81,8 @@ public class Common
                 {
                     //keep the words that have the same char at the same location
                     ArrayList<String> temp = new ArrayList<String>(2000);
-                    for (String word : answerWordsList) if (word.charAt(loc) == inputWordLower.charAt(loc)) temp.add(word);
+                    for (String word : answerWordsList)
+                        if (word.charAt(loc) == inputWordLower.charAt(loc)) temp.add(word);
                     answerWordsList = temp;
                     break;
                 }
@@ -93,7 +90,8 @@ public class Common
                 {
                     //remove the words that have the same char that is not matched
                     ArrayList<String> temp = new ArrayList<String>(2000);
-                    for (String word : answerWordsList) if (!word.contains(inputWordLower.charAt(loc)+"")) temp.add(word);
+                    for (String word : answerWordsList)
+                        if (!word.contains(inputWordLower.charAt(loc) + "")) temp.add(word);
                     answerWordsList = temp;
                     break;
                 }
