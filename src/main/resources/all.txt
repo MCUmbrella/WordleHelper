@@ -1,6 +1,6 @@
 ##################################################
 # Wordle dictionary: all words
-# Update: 2022-02-11
+# Update: 2022-08-25
 ##################################################
 cigar
 rebut
@@ -286,7 +286,6 @@ epoxy
 nymph
 found
 shall
-harry
 stove
 lowly
 snout
@@ -317,9 +316,7 @@ askew
 heist
 shown
 zesty
-hasty
 trash
-fella
 larva
 forgo
 story
@@ -329,8 +326,8 @@ homer
 badge
 midst
 canny
-fetus
-butch
+shine
+gecko
 farce
 slung
 tipsy
@@ -362,7 +359,6 @@ flood
 trait
 girth
 piety
-payer
 goose
 float
 donor
@@ -384,30 +380,24 @@ droll
 gawky
 hutch
 pinto
-gaily
 egret
 lilac
 sever
 field
 fluff
-hydro
-flack
 agape
 voice
 stead
-stalk
 berth
 madam
 night
 bland
 liver
 wedge
-augur
 roomy
 wacky
 flock
 angry
-bobby
 trite
 aphid
 tryst
@@ -440,14 +430,11 @@ twice
 twang
 shrug
 treat
-unlit
 waste
 merit
 woven
-octal
 needy
 clown
-widow
 irony
 ruder
 gauze
@@ -468,17 +455,14 @@ tibia
 booze
 alpha
 thyme
-eclat
 doubt
 parer
 chute
 stick
 trice
 alike
-sooth
 recap
 saint
-liege
 glory
 grate
 admit
@@ -500,7 +484,6 @@ enjoy
 valid
 ionic
 equal
-unset
 floor
 catch
 spade
@@ -525,9 +508,6 @@ aloud
 photo
 dream
 stale
-vomit
-ombre
-fanny
 unite
 snarl
 baker
@@ -2266,8 +2246,6 @@ spied
 undid
 intro
 basal
-shine
-gecko
 rodeo
 guard
 steer
@@ -2311,6 +2289,28 @@ rower
 artsy
 rural
 shave
+bobby
+eclat
+fella
+gaily
+harry
+hasty
+hydro
+liege
+octal
+ombre
+payer
+sooth
+unset
+unlit
+vomit
+fanny
+fetus
+butch
+stalk
+flack
+widow
+augur
 
 aahed
 aalii
@@ -2463,6 +2463,7 @@ agoge
 agone
 agons
 agood
+agora
 agria
 agrin
 agros
@@ -3228,6 +3229,7 @@ birsy
 bises
 bisks
 bisom
+bitch
 biter
 bites
 bitos
@@ -3875,6 +3877,7 @@ chimo
 chimp
 chine
 ching
+chink
 chino
 chins
 chips
@@ -4130,6 +4133,7 @@ cooly
 coomb
 cooms
 coomy
+coons
 coops
 coopt
 coost
@@ -4412,6 +4416,7 @@ dargs
 daric
 daris
 darks
+darky
 darns
 darre
 darts
@@ -4931,6 +4936,9 @@ dwile
 dwine
 dyads
 dyers
+dyked
+dykes
+dykey
 dykon
 dynel
 dynes
@@ -5183,7 +5191,9 @@ faena
 faery
 faffs
 faffy
+faggy
 fagin
+fagot
 faiks
 fails
 faine
@@ -5321,6 +5331,7 @@ fezes
 fezzy
 fiars
 fiats
+fibre
 fibro
 fices
 fiche
@@ -5955,6 +5966,7 @@ gooby
 goods
 goofs
 googs
+gooks
 gooky
 goold
 gools
@@ -6434,6 +6446,7 @@ homes
 homey
 homie
 homme
+homos
 honan
 honda
 honds
@@ -7055,6 +7068,7 @@ kiers
 kieve
 kievs
 kight
+kikes
 kikoi
 kiley
 kilim
@@ -7158,6 +7172,7 @@ kophs
 kopje
 koppa
 korai
+koran
 koras
 korat
 kores
@@ -7412,6 +7427,7 @@ lepta
 lered
 leres
 lerps
+lesbo
 leses
 lests
 letch
@@ -7710,6 +7726,7 @@ lycea
 lycee
 lycra
 lymes
+lynch
 lynes
 lyres
 lysed
@@ -9493,6 +9510,7 @@ punto
 punts
 punty
 pupae
+pupal
 pupas
 pupus
 purda
@@ -9507,6 +9525,7 @@ pursy
 purty
 puses
 pusle
+pussy
 putid
 puton
 putti
@@ -9587,6 +9606,7 @@ quoit
 quoll
 quonk
 quops
+quran
 qursh
 quyte
 rabat
@@ -10707,6 +10727,7 @@ slaps
 slart
 slats
 slaty
+slave
 slaws
 slays
 slebs
@@ -10750,6 +10771,7 @@ slums
 slurb
 slurs
 sluse
+sluts
 slyer
 slype
 smaak
@@ -10994,11 +11016,14 @@ spews
 spewy
 spial
 spica
+spick
+spics
 spide
 spier
 spies
 spiff
 spifs
+spiks
 spile
 spims
 spina
@@ -12467,6 +12492,7 @@ wells
 welly
 welts
 wembs
+wench
 wends
 wenge
 wenny
@@ -12519,6 +12545,7 @@ whomp
 whoof
 whoot
 whops
+whore
 whorl
 whort
 whoso
