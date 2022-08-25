@@ -11,8 +11,8 @@ public class LetterBlock extends JLabel
             COLOR_OFF_TARGETED = new Color(0x3a3a3c),
             COLOR_DISPLACED = new Color(0xb59f3b),
             COLOR_HIT = new Color(0x538d4e);
-    int number;
     public boolean numberSet = false;
+    int number;
 
     public LetterBlock()
     {
@@ -30,16 +30,10 @@ public class LetterBlock extends JLabel
         return number;
     }
 
-    @Override
-    public void setText(String text)
-    {
-        super.setText(text.toUpperCase());
-    }
-
     public void setNumber(int number)
     {
         this.number = number;
-        switch (number)
+        switch(number)
         {
             case -1:
             case 0:
@@ -62,5 +56,11 @@ public class LetterBlock extends JLabel
                 throw new IllegalArgumentException("Invalid number: " + number);
             }
         }
+    }
+
+    @Override
+    public void setText(String text)
+    {
+        super.setText(text.toUpperCase());
     }
 }

@@ -4,7 +4,8 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import static vip.floatationdevice.wordlehelper.Common.*;
+import static vip.floatationdevice.wordlehelper.Common.answerWordsList;
+import static vip.floatationdevice.wordlehelper.Common.calculatePossibleWords;
 
 public class CLI
 {
@@ -17,7 +18,7 @@ public class CLI
 
     public static void main(String[] args)
     {
-        if (Launcher.startTime == 0)
+        if(Launcher.startTime == 0)
         {
             System.err.println("You are not running WordleHelper through the Launcher class. The startup time may be inaccurate.");
             Launcher.startTime = System.currentTimeMillis();
@@ -26,18 +27,20 @@ public class CLI
         {
             Common.readAnswerWords();
             Common.readAllWords();
-        } catch (Exception e)
+        }
+        catch(Exception e)
         {
             System.out.println("Please check the dictionary file path.\nMake sure 'common.txt' and 'all.txt' are\n in 'resources' folder or in the jar file.");
             e.printStackTrace();
             System.exit(-1);
         }
-        if (args.length > 1)
+        if(args.length > 1)
             try
             {
                 maxTries = Integer.parseInt(args[1]);
-                if (maxTries < 1) throw new NumberFormatException();
-            } catch (Exception e)
+                if(maxTries < 1) throw new NumberFormatException();
+            }
+            catch(Exception e)
             {
                 System.out.println("Argument must be a positive integer!");
                 e.printStackTrace();
@@ -54,22 +57,22 @@ public class CLI
         );
         try
         {
-            for (int i = 0; i != maxTries; )
+            for(int i = 0; i != maxTries; )
             {
                 System.out.print("Enter check result (try " + (i + 1) + "/" + maxTries + "): ");
                 String input = s.nextLine().toLowerCase();
-                if (checkResult.matcher(input).find() && answerWordsList.contains(input.substring(0, 5))) //if the input is valid
+                if(checkResult.matcher(input).find() && answerWordsList.contains(input.substring(0, 5))) //if the input is valid
                 {
                     String inputWord = input.substring(0, 5);
                     int[] result = new int[5];
-                    for (int j = 0; j != 5; j++) result[j] = Integer.parseInt(input.substring(j + 6, j + 7));
+                    for(int j = 0; j != 5; j++) result[j] = Integer.parseInt(input.substring(j + 6, j + 7));
                     calculatePossibleWords(inputWord, result);
-                    if (answerWordsList.size() == 0)
+                    if(answerWordsList.size() == 0)
                     {
                         System.out.println("No words left!\nIs there a:\n  · problem with your input?\n  · word that is not in the dictionary?\n  · bug in the program?");
                         System.exit(0);
                     }
-                    else if (answerWordsList.size() == 1)
+                    else if(answerWordsList.size() == 1)
                     {
                         System.out.println("The word is: " + answerWordsList.get(0));
                         System.exit(0);
@@ -84,7 +87,7 @@ public class CLI
                 else
                 {
                     System.out.print("Invalid input. Try again? [y/N]\n? ");
-                    if (s.nextLine().equalsIgnoreCase("y")) continue;
+                    if(s.nextLine().equalsIgnoreCase("y")) continue;
                     else
                     {
                         System.out.println("Exiting");
@@ -92,7 +95,8 @@ public class CLI
                     }
                 }
             }
-        } catch (NoSuchElementException e)//someone press ctrl+d !?/!1?!?1?!?1!?!?
+        }
+        catch(NoSuchElementException e)//someone press ctrl+d !?/!1?!?1?!?1!?!?
         {
             System.out.println("\nExiting");
             System.exit(0);

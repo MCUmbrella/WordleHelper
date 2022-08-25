@@ -1,7 +1,8 @@
 package vip.floatationdevice.wordlehelper;
 
-import java.awt.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Pattern;
@@ -25,12 +26,12 @@ public class Common
     public static void readAnswerWords() throws Exception
     {
         InputStream is = Common.class.getResourceAsStream(answerWordsFile);
-        if (is == null) throw new Exception("Could not read file '" + answerWordsFile + "'");
+        if(is == null) throw new Exception("Could not read file '" + answerWordsFile + "'");
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader reader = new BufferedReader(isr);
         //put matched words into possibleWordsList
-        for (String line = reader.readLine(); line != null; line = reader.readLine())
-            if (validWord.matcher(line).find()) answerWordsList.add(line.toLowerCase());
+        for(String line = reader.readLine(); line != null; line = reader.readLine())
+            if(validWord.matcher(line).find()) answerWordsList.add(line.toLowerCase());
         reader.close();
         isr.close();
         is.close();
@@ -41,12 +42,12 @@ public class Common
     public static void readAllWords() throws Exception
     {
         InputStream is = Common.class.getResourceAsStream(allWordsFile);
-        if (is == null) throw new Exception("Could not read file '" + allWordsFile + "'");
+        if(is == null) throw new Exception("Could not read file '" + allWordsFile + "'");
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader reader = new BufferedReader(isr);
         //put matched words into allWordsList
-        for (String line = reader.readLine(); line != null; line = reader.readLine())
-            if (validWord.matcher(line).find()) allWordsList.add(line.toLowerCase());
+        for(String line = reader.readLine(); line != null; line = reader.readLine())
+            if(validWord.matcher(line).find()) allWordsList.add(line.toLowerCase());
         reader.close();
         isr.close();
         is.close();
@@ -58,22 +59,22 @@ public class Common
     {
         String inputWordLower = inputWord.toLowerCase();
         //remove the word that have been identified as not being the answer
-        if (!(result[0] == 1 && result[1] == 1 && result[2] == 1 && result[3] == 1 && result[4] == 1))
+        if(!(result[0] == 1 && result[1] == 1 && result[2] == 1 && result[3] == 1 && result[4] == 1))
             answerWordsList.remove(inputWordLower);
         //calculation begins
-        for (int loc = 0; loc != 5; loc++)
+        for(int loc = 0; loc != 5; loc++)
         {
-            switch (result[loc])
+            switch(result[loc])
             {
                 case 2://the char is in another location
                 {
                     //keep the words that have the char
                     ArrayList<String> temp = new ArrayList<String>(2000);
-                    for (String word : answerWordsList)
-                        if (word.contains(inputWordLower.charAt(loc) + "")) temp.add(word);
+                    for(String word : answerWordsList)
+                        if(word.contains(inputWordLower.charAt(loc) + "")) temp.add(word);
                     //and remove the words that have the char in this location
-                    for (Iterator<String> it = temp.iterator(); it.hasNext(); )
-                        if (it.next().charAt(loc) == inputWordLower.charAt(loc)) it.remove();
+                    for(Iterator<String> it = temp.iterator(); it.hasNext(); )
+                        if(it.next().charAt(loc) == inputWordLower.charAt(loc)) it.remove();
                     answerWordsList = temp;
                     break;
                 }
@@ -81,8 +82,8 @@ public class Common
                 {
                     //keep the words that have the same char at the same location
                     ArrayList<String> temp = new ArrayList<String>(2000);
-                    for (String word : answerWordsList)
-                        if (word.charAt(loc) == inputWordLower.charAt(loc)) temp.add(word);
+                    for(String word : answerWordsList)
+                        if(word.charAt(loc) == inputWordLower.charAt(loc)) temp.add(word);
                     answerWordsList = temp;
                     break;
                 }
@@ -90,8 +91,8 @@ public class Common
                 {
                     //remove the words that have the same char that is not matched
                     ArrayList<String> temp = new ArrayList<String>(2000);
-                    for (String word : answerWordsList)
-                        if (!word.contains(inputWordLower.charAt(loc) + "")) temp.add(word);
+                    for(String word : answerWordsList)
+                        if(!word.contains(inputWordLower.charAt(loc) + "")) temp.add(word);
                     answerWordsList = temp;
                     break;
                 }
