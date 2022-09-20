@@ -242,6 +242,7 @@ public class GUI extends JFrame
             numberIndexColumn = 0;
         }
     }    //global key event dispatcher
+
     KeyEventDispatcher keyEventDispatcher = new KeyEventDispatcher()
     {
         @Override
@@ -373,7 +374,4 @@ public class GUI extends JFrame
         dispose();
         new GUI();
     }
-
-
-
 }

@@ -3,8 +3,8 @@ package vip.floatationdevice.wordlehelper;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.regex.Pattern;
 
 public class Common
@@ -18,9 +18,9 @@ public class Common
     //file: all words file 'all.txt' in the jar
     public final static String allWordsFile = "/all.txt";
     //possible answer words (from common.txt)
-    public static ArrayList<String> answerWordsList = new ArrayList<String>(2500);
+    public static LinkedList<String> answerWordsList = new LinkedList<>();
     //all accepted words (from all.txt)
-    public static ArrayList<String> allWordsList = new ArrayList<String>(13000);
+    public static LinkedList<String> allWordsList = new LinkedList<String>();
 
     //read words from 'common.txt' and store them in answerWordsList
     public static void readAnswerWords() throws Exception
@@ -69,31 +69,24 @@ public class Common
                 case 2://the char is in another location
                 {
                     //keep the words that have the char
-                    ArrayList<String> temp = new ArrayList<String>(2000);
-                    for(String word : answerWordsList)
-                        if(word.contains(inputWordLower.charAt(loc) + "")) temp.add(word);
-                    //and remove the words that have the char in this location
-                    for(Iterator<String> it = temp.iterator(); it.hasNext(); )
+                    for(Iterator<String> it = answerWordsList.iterator(); it.hasNext(); )
                         if(it.next().charAt(loc) == inputWordLower.charAt(loc)) it.remove();
-                    answerWordsList = temp;
+                    for(Iterator<String> it = answerWordsList.iterator(); it.hasNext(); )
+                        if(!it.next().contains(inputWordLower.charAt(loc) + "")) it.remove();
                     break;
                 }
                 case 1://the char is in the right location
                 {
                     //keep the words that have the same char at the same location
-                    ArrayList<String> temp = new ArrayList<String>(2000);
-                    for(String word : answerWordsList)
-                        if(word.charAt(loc) == inputWordLower.charAt(loc)) temp.add(word);
-                    answerWordsList = temp;
+                    for(Iterator<String> it = answerWordsList.iterator(); it.hasNext(); )
+                        if(it.next().charAt(loc) != inputWordLower.charAt(loc)) it.remove();
                     break;
                 }
                 case 0://the char is not in the answer word
                 {
                     //remove the words that have the same char that is not matched
-                    ArrayList<String> temp = new ArrayList<String>(2000);
-                    for(String word : answerWordsList)
-                        if(!word.contains(inputWordLower.charAt(loc) + "")) temp.add(word);
-                    answerWordsList = temp;
+                    for(Iterator<String> it = answerWordsList.iterator(); it.hasNext(); )
+                        if(it.next().charAt(loc) == inputWordLower.charAt(loc)) it.remove();
                     break;
                 }
             }
