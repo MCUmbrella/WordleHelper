@@ -11,18 +11,22 @@ public class Common
 {
     public final static String PROGRAM_NAME = "WordleHelper 2.2.0";
 
-    //regex: 5 letters
+    /** regex: 5 letters */
     public final static Pattern validWord = Pattern.compile("^[a-zA-Z]{5}$");
-    //file: answer words file 'common.txt' in the jar
+
+    /** file: answer words file 'common.txt' in the jar */
     public final static String answerWordsFile = "/common.txt";
-    //file: all words file 'all.txt' in the jar
+
+    /** file: all words file 'all.txt' in the jar */
     public final static String allWordsFile = "/all.txt";
-    //possible answer words (from common.txt)
+
+    /** possible answer words (from common.txt) */
     public static LinkedList<String> answerWordsList = new LinkedList<>();
-    //all accepted words (from all.txt)
+
+    /** all accepted words (from all.txt) */
     public static LinkedList<String> allWordsList = new LinkedList<String>();
 
-    //read words from 'common.txt' and store them in answerWordsList
+    /** read words from 'common.txt' and store them in answerWordsList */
     public static void readAnswerWords() throws Exception
     {
         InputStream is = Common.class.getResourceAsStream(answerWordsFile);
@@ -38,7 +42,7 @@ public class Common
         System.out.println("Answer words dictionary size: " + answerWordsList.size());
     }
 
-    //read words from 'all.txt' and store them in allWordsList
+    /** read words from 'all.txt' and store them in allWordsList */
     public static void readAllWords() throws Exception
     {
         InputStream is = Common.class.getResourceAsStream(allWordsFile);
@@ -54,7 +58,7 @@ public class Common
         System.out.println("All words dictionary size: " + allWordsList.size());
     }
 
-    //calculate the possible words
+    /** calculate the possible words */
     public static void calculatePossibleWords(String inputWord, int[] result)
     {
         String inputWordLower = inputWord.toLowerCase();
