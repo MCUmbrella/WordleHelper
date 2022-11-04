@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class Common
 {
-    public final static String PROGRAM_NAME = "WordleHelper 2.2.1";
+    public final static String PROGRAM_NAME = "WordleHelper 2.3.0";
 
     /** regex: 5 letters */
     public final static Pattern validWord = Pattern.compile("^[a-zA-Z]{5}$");
