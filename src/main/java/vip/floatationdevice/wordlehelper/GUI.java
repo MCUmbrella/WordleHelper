@@ -46,8 +46,8 @@ public class GUI extends JFrame
     private final static String initText =
             "Possible words will be shown here\n" +
                     "Enter 5 letters and then 5 numbers to update them\n" +
-                    "Press the '?' button to see help message\n" +
-                    "Press the 'R' button to reset the program\n\n";
+                    "Press the [?] button to see help message\n" +
+                    "Press the [R] button or Ctrl+R to reset the program\n\n";
 
     /** acceptable chars: 0-2, a-z, backspace */
     private final static char[] acceptableChars = {
@@ -85,6 +85,9 @@ public class GUI extends JFrame
     // current location of the number input
     private int numberIndexLine = 0;
     private int numberIndexColumn = 0;
+    // window location
+    private static int windowX = Integer.MIN_VALUE;
+    private static int windowY = Integer.MIN_VALUE;
 
     /** tries counter */
     private int tries = 0;
@@ -102,7 +105,7 @@ public class GUI extends JFrame
         {
             readAnswerWords();
             readAllWords();
-            wordsLeftLabel.setText(answerWordsList.size() + " answer words loaded");
+            wordsLeftLabel.setText("Answer words left: " + answerWordsList.size());
             //show all words at first
             possibleWordsField.append(answerWordsList.toString());
         }
@@ -191,6 +194,7 @@ public class GUI extends JFrame
                 mainPanel.add(board[i][j]);
                 board[i][j].setBounds(j * 50 + 10, i * 50 + 10, 50, 50);
             }
+        if(windowX != Integer.MIN_VALUE && windowY != Integer.MAX_VALUE) setLocation(windowX, windowY);
         //show magic
         setVisible(true);
         startupWindow.dispose();
@@ -264,7 +268,7 @@ public class GUI extends JFrame
         {
             if(e.getID() == KeyEvent.KEY_PRESSED)
             {
-                if(e.getKeyCode() == KeyEvent.VK_F3) // turn on debug mode
+                if(e.getKeyCode() == KeyEvent.VK_F3) // F3: turn on debug mode
                 {
                     mainPanel.setBorder(BorderFactory.createLineBorder(Color.red));
                     possibleWordsField.setBorder(BorderFactory.createLineBorder(Color.red));
@@ -284,6 +288,11 @@ public class GUI extends JFrame
                             DBG_TITLE[new Random().nextInt(DBG_TITLE.length)],
                             JOptionPane.INFORMATION_MESSAGE
                     );
+                    return true;
+                }
+                if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_R) // ^R: reset
+                {
+                    resetGUI();
                     return true;
                 }
                 for(char c : acceptableChars)
@@ -310,12 +319,14 @@ public class GUI extends JFrame
                                         System.out.println("update possible words: " + getWord(letterIndexLine) + " " + Arrays.toString(getResultNumbers(numberIndexLine)));
                                         calculatePossibleWords(getWord(letterIndexLine), getResultNumbers(numberIndexLine));
                                         possibleWordsField.setText("Possible words:\n" + answerWordsList);
-                                        wordsLeftLabel.setText(answerWordsList.size() + " answer words left");
+                                        wordsLeftLabel.setText("Answer words left: " + answerWordsList.size());
                                         //if ArrayList is empty, the game is over
                                         if(answerWordsList.size() == 0)
                                         {
                                             KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(keyEventDispatcher);
                                             triesLabel.setText("Try " + ++tries + " / 6");
+                                            wordsLeftLabel.setText("No words left!");
+                                            wordsLeftLabel.setForeground(Color.RED);
                                             System.out.println("no words left");
                                             JOptionPane.showMessageDialog(null,
                                                     "No words left!\n\n" +
@@ -331,6 +342,8 @@ public class GUI extends JFrame
                                         {
                                             KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(keyEventDispatcher);
                                             triesLabel.setText("Try " + ++tries + " / 6");
+                                            wordsLeftLabel.setText("Answer word: " + answerWordsList.get(0));
+                                            wordsLeftLabel.setForeground(Color.GREEN);
                                             System.out.println("only one word left: " + answerWordsList.get(0));
                                             JOptionPane.showMessageDialog(null,
                                                     "The word we are finding is:\n\n  · " + answerWordsList.get(0) + "\n\nThe program will reset",
@@ -346,12 +359,12 @@ public class GUI extends JFrame
                                             numberIndexLine++;
                                             letterIndexLine++;
                                             triesLabel.setText("Try " + ++tries + " / 6");
-                                            //tries++;
                                         }
                                         //if the last line is reached, the game is over
                                         if(numberIndexLine == 6)
                                         {
                                             KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(keyEventDispatcher);
+                                            triesLabel.setForeground(Color.RED);
                                             System.out.println("last line reached");
                                             JOptionPane.showMessageDialog(null,
                                                     "Last line reached!\nThe program will reset",
@@ -415,6 +428,8 @@ public class GUI extends JFrame
         KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(keyEventDispatcher);
         answerWordsList.clear();
         allWordsList.clear();
+        windowX = getX();
+        windowY = getY();
         dispose();
         new GUI();
     }
