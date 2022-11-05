@@ -24,7 +24,7 @@ public class Common
     public static LinkedList<String> answerWordsList = new LinkedList<>();
 
     /** all accepted words (from all.txt) */
-    public static LinkedList<String> allWordsList = new LinkedList<String>();
+    public static LinkedList<String> allWordsList = new LinkedList<>();
 
     /** read words from 'common.txt' and store them in answerWordsList */
     public static void readAnswerWords() throws Exception
@@ -62,36 +62,91 @@ public class Common
     public static void calculatePossibleWords(String inputWord, int[] result)
     {
         String inputWordLower = inputWord.toLowerCase();
+        // check if the word has a letter that appeared more than once
+        boolean hasDuplicateLetter = false;
+        byte[] appears = new byte[26];
+        for(char c : inputWordLower.toCharArray())
+            appears[c - 'a']++;
+        for(byte b : appears)
+            if(b > 1)
+            {
+                hasDuplicateLetter = true;
+                break;
+            }
         //remove the word that have been identified as not being the answer
         if(!(result[0] == 1 && result[1] == 1 && result[2] == 1 && result[3] == 1 && result[4] == 1))
             answerWordsList.remove(inputWordLower);
         //calculation begins
-        for(int loc = 0; loc != 5; loc++)
+        if(hasDuplicateLetter)
         {
-            switch(result[loc])
+            // use a more 'conservative' algorithm. it doesnt have problems when there are duplicate letters in the word
+            for(int loc = 0; loc != 5; loc++)
             {
-                case 2://the char is in another location
+                switch(result[loc])
                 {
-                    //keep the words that have the char
-                    for(Iterator<String> it = answerWordsList.iterator(); it.hasNext(); )
-                        if(it.next().charAt(loc) == inputWordLower.charAt(loc)) it.remove();
-                    for(Iterator<String> it = answerWordsList.iterator(); it.hasNext(); )
-                        if(!it.next().contains(inputWordLower.charAt(loc) + "")) it.remove();
-                    break;
+                    case 2://the char is in another location
+                    {
+                        //keep the words that have the char
+                        for(Iterator<String> it = answerWordsList.iterator(); it.hasNext(); )
+                            if(it.next().charAt(loc) == inputWordLower.charAt(loc)) it.remove();
+                        for(Iterator<String> it = answerWordsList.iterator(); it.hasNext(); )
+                            if(!it.next().contains(inputWordLower.charAt(loc) + "")) it.remove();
+                        break;
+                    }
+                    case 1://the char is in the right location
+                    {
+                        //keep the words that have the same char at the same location
+                        for(Iterator<String> it = answerWordsList.iterator(); it.hasNext(); )
+                            if(it.next().charAt(loc) != inputWordLower.charAt(loc)) it.remove();
+                        break;
+                    }
+                    case 0://the char is not in the answer word
+                    {
+                        //remove the words that have the same char that is not matched
+                        for(Iterator<String> it = answerWordsList.iterator(); it.hasNext(); )
+                            if(it.next().charAt(loc) == inputWordLower.charAt(loc)) it.remove();
+                        break;
+                    }
                 }
-                case 1://the char is in the right location
+            }
+        }
+        else
+        {
+            // use a more 'aggressive' algorithm that was used by default before WH 2.2.0
+            for(int loc = 0; loc != 5; loc++)
+            {
+                switch(result[loc])
                 {
-                    //keep the words that have the same char at the same location
-                    for(Iterator<String> it = answerWordsList.iterator(); it.hasNext(); )
-                        if(it.next().charAt(loc) != inputWordLower.charAt(loc)) it.remove();
-                    break;
-                }
-                case 0://the char is not in the answer word
-                {
-                    //remove the words that have the same char that is not matched
-                    for(Iterator<String> it = answerWordsList.iterator(); it.hasNext(); )
-                        if(it.next().charAt(loc) == inputWordLower.charAt(loc)) it.remove();
-                    break;
+                    case 2://the char is in another location
+                    {
+                        //keep the words that have the char
+                        LinkedList<String> temp = new LinkedList<>();
+                        for(String word : answerWordsList)
+                            if(word.contains(inputWordLower.charAt(loc) + "")) temp.add(word);
+                        //and remove the words that have the char in this location
+                        for(Iterator<String> it = temp.iterator(); it.hasNext(); )
+                            if(it.next().charAt(loc) == inputWordLower.charAt(loc)) it.remove();
+                        answerWordsList = temp;
+                        break;
+                    }
+                    case 1://the char is in the right location
+                    {
+                        //keep the words that have the same char at the same location
+                        LinkedList<String> temp = new LinkedList<>();
+                        for(String word : answerWordsList)
+                            if(word.charAt(loc) == inputWordLower.charAt(loc)) temp.add(word);
+                        answerWordsList = temp;
+                        break;
+                    }
+                    case 0://the char is not in the answer word
+                    {
+                        //remove the words that have the same char that is not matched
+                        LinkedList<String> temp = new LinkedList<>();
+                        for(String word : answerWordsList)
+                            if(!word.contains(inputWordLower.charAt(loc) + "")) temp.add(word);
+                        answerWordsList = temp;
+                        break;
+                    }
                 }
             }
         }

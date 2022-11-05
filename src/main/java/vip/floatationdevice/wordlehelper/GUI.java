@@ -431,6 +431,7 @@ public class GUI extends JFrame
         windowX = getX();
         windowY = getY();
         dispose();
+        System.gc();
         new GUI();
     }
 
