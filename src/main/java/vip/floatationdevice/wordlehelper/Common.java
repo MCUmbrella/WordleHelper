@@ -14,19 +14,19 @@ public class Common
     /** regex: 5 letters */
     public final static Pattern validWord = Pattern.compile("^[a-zA-Z]{5}$");
 
-    /** file: answer words file 'common.txt' in the jar */
-    public final static String answerWordsFile = "/common.txt";
+    /** file: answer words file 'answer.txt' in the jar */
+    public final static String answerWordsFile = "/answer.txt";
 
     /** file: all words file 'all.txt' in the jar */
     public final static String allWordsFile = "/all.txt";
 
-    /** possible answer words (from common.txt) */
+    /** possible answer words (from answer.txt) */
     public static LinkedList<String> answerWordsList = new LinkedList<>();
 
     /** all accepted words (from all.txt) */
     public static LinkedList<String> allWordsList = new LinkedList<>();
 
-    /** read words from 'common.txt' and store them in answerWordsList */
+    /** read words from 'answer.txt' and store them in answerWordsList */
     public static void readAnswerWords() throws Exception
     {
         InputStream is = Common.class.getResourceAsStream(answerWordsFile);

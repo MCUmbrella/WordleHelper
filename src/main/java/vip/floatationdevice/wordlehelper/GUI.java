@@ -117,7 +117,7 @@ public class GUI extends JFrame
             //show error window
             JOptionPane.showMessageDialog(null,
                     e +
-                            "\n\nPlease check the dictionary file path.\nMake sure 'common.txt' and 'all.txt' are\n in 'resources' folder or in the jar file.",
+                            "\n\nPlease check the dictionary file path.\nMake sure 'answer.txt' and 'all.txt' are\n in 'resources' folder or in the jar file.",
                     "Error loading dictionary",
                     JOptionPane.ERROR_MESSAGE
             );

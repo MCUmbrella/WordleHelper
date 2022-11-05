@@ -30,7 +30,7 @@ public class CLI
         }
         catch(Exception e)
         {
-            System.out.println("Please check the dictionary file path.\nMake sure 'common.txt' and 'all.txt' are\n in 'resources' folder or in the jar file.");
+            System.out.println("Please check the dictionary file path.\nMake sure 'answer.txt' and 'all.txt' are\n in 'resources' folder or in the jar file.");
             e.printStackTrace();
             System.exit(-1);
         }
