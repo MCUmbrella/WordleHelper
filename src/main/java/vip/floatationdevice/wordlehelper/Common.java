@@ -9,31 +9,30 @@ import java.util.regex.Pattern;
 
 public class Common
 {
-    public final static String PROGRAM_NAME = "WordleHelper 2.3.0";
+    public final static String PROGRAM_NAME = "WordleHelper 2.4.0";
 
-    /** regex: 5 letters */
-    public final static Pattern validWord = Pattern.compile("^[a-zA-Z]{5}$");
+    // regex: 5 letters
+    private final static Pattern validWord = Pattern.compile("^[a-zA-Z]{5}$");
 
-    /** file: answer words file 'answer.txt' in the jar */
-    public final static String answerWordsFile = "/answer.txt";
+    // answer words file 'answer.txt' in the jar
+    private final static String answerWordsFile = "/answer.txt";
 
-    /** file: all words file 'all.txt' in the jar */
-    public final static String allWordsFile = "/all.txt";
+    // all words file 'all.txt' in the jar
+    private final static String allWordsFile = "/all.txt";
 
-    /** possible answer words (from answer.txt) */
-    public static LinkedList<String> answerWordsList = new LinkedList<>();
+    // list of possible answer words (from answer.txt)
+    static LinkedList<String> answerWordsList = new LinkedList<>();
 
-    /** all accepted words (from all.txt) */
-    public static LinkedList<String> allWordsList = new LinkedList<>();
+    // list of all acceptable words (from all.txt)
+    static LinkedList<String> allWordsList = new LinkedList<>();
 
-    /** read words from 'answer.txt' and store them in answerWordsList */
+    // read words from 'answer.txt' and store them in answerWordsList
     public static void readAnswerWords() throws Exception
     {
         InputStream is = Common.class.getResourceAsStream(answerWordsFile);
         if(is == null) throw new Exception("Could not read file '" + answerWordsFile + "'");
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader reader = new BufferedReader(isr);
-        //put matched words into possibleWordsList
         for(String line = reader.readLine(); line != null; line = reader.readLine())
             if(validWord.matcher(line).find()) answerWordsList.add(line.toLowerCase());
         reader.close();
@@ -42,14 +41,13 @@ public class Common
         System.out.println("Answer words dictionary size: " + answerWordsList.size());
     }
 
-    /** read words from 'all.txt' and store them in allWordsList */
+    // read words from 'all.txt' and store them in allWordsList
     public static void readAllWords() throws Exception
     {
         InputStream is = Common.class.getResourceAsStream(allWordsFile);
         if(is == null) throw new Exception("Could not read file '" + allWordsFile + "'");
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader reader = new BufferedReader(isr);
-        //put matched words into allWordsList
         for(String line = reader.readLine(); line != null; line = reader.readLine())
             if(validWord.matcher(line).find()) allWordsList.add(line.toLowerCase());
         reader.close();
@@ -58,9 +56,12 @@ public class Common
         System.out.println("All words dictionary size: " + allWordsList.size());
     }
 
-    /** calculate the possible words */
-    public static void calculatePossibleWords(String inputWord, int[] result)
+    /**
+     * calculate the possible words
+     */
+    public static String[] calculatePossibleWords(String inputWord, int[] result)
     {
+        if(answerWordsList.size() < 2) throw new IllegalStateException("No more words to be calculated");
         String inputWordLower = inputWord.toLowerCase();
         // check if the word has a letter that appeared more than once
         boolean hasDuplicateLetter = false;
@@ -150,5 +151,13 @@ public class Common
                 }
             }
         }
+        String[] remaining = new String[answerWordsList.size()];
+        int i = 0;
+        for(String s : answerWordsList)
+        {
+            remaining[i] = s;
+            i++;
+        }
+        return remaining;
     }
 }

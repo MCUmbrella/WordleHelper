@@ -15,24 +15,6 @@ import static vip.floatationdevice.wordlehelper.Common.*;
 
 public class GUI extends JFrame
 {
-    /*
-     * The perfect layout of the window
-     *           - but I can't get there
-     *
-     * +-------------------------------+
-     * | WordleHelper 1.1    [R][-][X] |
-     * +-----------+-------------------+
-     * | _ _ _ _ _ |  Possible words:  |
-     * | _ _ _ _ _ | xxxxx xxxxx xxxxx |
-     * | _ _ _ _ _ | xxxxx xxxxx xxxxx |
-     * | _ _ _ _ _ | xxxxx xxxxx xxxxx |
-     * | _ _ _ _ _ | xxxxx xxxxx xxxxx |
-     * | _ _ _ _ _ | xxxxx xxxxx xxxxx |
-     * +-----------+-------------------+
-     * | Try {}/6  | {} words left [?] |
-     * +-------------------------------+
-     */
-
     /** help message */
     private final static String helpText =
             "Each line accepts first 5 letters and then 5 numbers from 0 to 2.\n" +
@@ -240,9 +222,7 @@ public class GUI extends JFrame
     {
         int[] result = new int[5];
         for(int i = 0; i != 5; i++)
-            //if(board[line][i].numberSet)
             result[i] = board[line][i].getNumber();
-        //else return null;
         return result;
     }
 
@@ -252,12 +232,10 @@ public class GUI extends JFrame
         for(int i = 0; i != 5; i++)
         {
             board[line][i].setText("_");
-            board[line][i].setNumber(0);
-            board[line][i].numberSet = false;
-            board[line][i].setBackground(LetterBlock.COLOR_UNSET);
-            letterIndexColumn = 0;
-            numberIndexColumn = 0;
+            board[line][i].setNumber(-1);
         }
+        letterIndexColumn = 0;
+        numberIndexColumn = 0;
     }
 
     /** global key event dispatcher */
@@ -307,15 +285,14 @@ public class GUI extends JFrame
                             case '2':
                             {
                                 //check if the current line is filled with letters and the current block's number is not set
-                                if(getWord(letterIndexLine) != null && !board[numberIndexLine][numberIndexColumn].numberSet)
+                                if(getWord(letterIndexLine) != null && board[numberIndexLine][numberIndexColumn].getNumber() == -1)
                                 {
                                     //set the number
                                     board[numberIndexLine][numberIndexColumn].setNumber(Integer.parseInt(String.valueOf(e.getKeyChar())));
-                                    board[numberIndexLine][numberIndexColumn].numberSet = true;
                                     //move to the next block or to the next line
                                     if(numberIndexColumn == 4)
                                     {
-                                        //update the possible words
+                                        //this line has reached the end, update possible words
                                         System.out.println("update possible words: " + getWord(letterIndexLine) + " " + Arrays.toString(getResultNumbers(numberIndexLine)));
                                         calculatePossibleWords(getWord(letterIndexLine), getResultNumbers(numberIndexLine));
                                         possibleWordsField.setText("Possible words:\n" + answerWordsList);
@@ -327,7 +304,7 @@ public class GUI extends JFrame
                                             triesLabel.setText("Try " + ++tries + " / 6");
                                             wordsLeftLabel.setText("No words left!");
                                             wordsLeftLabel.setForeground(Color.RED);
-                                            System.out.println("no words left");
+                                            System.err.println("no words left");
                                             JOptionPane.showMessageDialog(null,
                                                     "No words left!\n\n" +
                                                             "Is there a:\n  · problem with your input?\n  · word that is not in the dictionary?\n  · bug in the program?" +
@@ -365,7 +342,7 @@ public class GUI extends JFrame
                                         {
                                             KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(keyEventDispatcher);
                                             triesLabel.setForeground(Color.RED);
-                                            System.out.println("last line reached");
+                                            System.err.println("last line reached");
                                             JOptionPane.showMessageDialog(null,
                                                     "Last line reached!\nThe program will reset",
                                                     "Last line reached!",
@@ -376,7 +353,7 @@ public class GUI extends JFrame
                                     }
                                     else numberIndexColumn++;
                                 }
-                                else System.out.println("number typed before setting the word");
+                                else System.err.println("number typed before setting the word");
                                 break;
                             }
                             //backspace
@@ -390,27 +367,31 @@ public class GUI extends JFrame
                             //letters
                             default:
                             {
-                                //set the current letter
-                                board[letterIndexLine][letterIndexColumn].setText(e.getKeyChar() + "");
-                                //move to the next letter
-                                letterIndexColumn++;
-                                if(letterIndexColumn == 5)//check if the word is in the dictionary
+                                if(getWord(letterIndexLine) == null)//word is not fully typed, allow letters
                                 {
-                                    if(allWordsList.contains(getWord(letterIndexLine)))
+                                    //set the current letter
+                                    board[letterIndexLine][letterIndexColumn].setText(e.getKeyChar() + "");
+                                    //move to the next letter
+                                    letterIndexColumn++;
+                                    if(letterIndexColumn == 5)//check if the word is in the dictionary
                                     {
-                                        //move to the first letter and start setting the numbers
-                                        letterIndexColumn = 0;
-                                        System.out.println(getWord(letterIndexLine) + " is in the dictionary. start setting numbers");
-                                    }
-                                    else
-                                    {
-                                        //reset the current line
-                                        resetLine(letterIndexLine);
-                                        //move back to the first letter
-                                        letterIndexColumn = 0;
-                                        System.out.println("word not in dictionary. reset line " + (letterIndexLine + 1));
+                                        if(allWordsList.contains(getWord(letterIndexLine)))
+                                        {
+                                            //move to the first letter and start setting the numbers
+                                            letterIndexColumn = 0;
+                                            System.out.println(getWord(letterIndexLine) + " is in the dictionary. start setting numbers");
+                                        }
+                                        else
+                                        {
+                                            //reset the current line
+                                            resetLine(letterIndexLine);
+                                            //move back to the first letter
+                                            letterIndexColumn = 0;
+                                            System.err.println("word not in dictionary. reset line " + (letterIndexLine + 1));
+                                        }
                                     }
                                 }
+                                else System.err.println("letter typed after setting the word");
                                 break;
                             }
                         }
