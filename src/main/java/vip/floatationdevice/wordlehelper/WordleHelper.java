@@ -7,8 +7,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.regex.Pattern;
 
-public class Common
+public class WordleHelper
 {
+    private WordleHelper(){throw new UnsupportedOperationException();}
+
     public final static String PROGRAM_NAME = "WordleHelper 2.4.0";
 
     // regex: 5 letters
@@ -29,7 +31,7 @@ public class Common
     // read words from 'answer.txt' and store them in answerWordsList
     public static void readAnswerWords() throws Exception
     {
-        InputStream is = Common.class.getResourceAsStream(answerWordsFile);
+        InputStream is = WordleHelper.class.getResourceAsStream(answerWordsFile);
         if(is == null) throw new Exception("Could not read file '" + answerWordsFile + "'");
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader reader = new BufferedReader(isr);
@@ -44,7 +46,7 @@ public class Common
     // read words from 'all.txt' and store them in allWordsList
     public static void readAllWords() throws Exception
     {
-        InputStream is = Common.class.getResourceAsStream(allWordsFile);
+        InputStream is = WordleHelper.class.getResourceAsStream(allWordsFile);
         if(is == null) throw new Exception("Could not read file '" + allWordsFile + "'");
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader reader = new BufferedReader(isr);

@@ -11,9 +11,9 @@ import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Random;
 
-import static vip.floatationdevice.wordlehelper.Common.*;
+import static vip.floatationdevice.wordlehelper.WordleHelper.*;
 
-public class GUI extends JFrame
+public class WordleHelperGUI extends JFrame
 {
     /** help message */
     private final static String helpText =
@@ -74,7 +74,7 @@ public class GUI extends JFrame
     /** tries counter */
     private int tries = 0;
 
-    public GUI()
+    public WordleHelperGUI()
     {
         StartupWindow startupWindow = new StartupWindow();
         if(!startupComplete)
@@ -147,7 +147,7 @@ public class GUI extends JFrame
                 KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(keyEventDispatcher);
                 System.out.println("help button pressed");
                 //show help dialog
-                JOptionPane.showMessageDialog(GUI.this,
+                JOptionPane.showMessageDialog(WordleHelperGUI.this,
                         helpText,
                         "Help",
                         JOptionPane.INFORMATION_MESSAGE
@@ -190,7 +190,7 @@ public class GUI extends JFrame
             System.err.println("You are not running WordleHelper through the Launcher class. The startup time may be inaccurate.");
             Launcher.startTime = System.currentTimeMillis();
         }
-        new GUI().setVisible(true);
+        new WordleHelperGUI().setVisible(true);
         System.out.println("Startup time: " + (System.currentTimeMillis() - Launcher.startTime) + "ms");
     }
 
@@ -258,7 +258,7 @@ public class GUI extends JFrame
                     helpButton.setBorder(BorderFactory.createLineBorder(Color.red));
                     resetButton.setBorder(BorderFactory.createLineBorder(Color.red));
                     System.out.println(answerWordsList);
-                    JOptionPane.showMessageDialog(GUI.this,
+                    JOptionPane.showMessageDialog(WordleHelperGUI.this,
                             "Created by MCUmbrella (https://github.com/MCUmbrella)\n" +
                                     "This software is licensed under the MIT license and provided with absolutely no warranty.\n" +
                                     "You can go to https://github.com/MCUmbrella/WordleHelper to check out the source code,\n" +
@@ -413,7 +413,7 @@ public class GUI extends JFrame
         windowY = getY();
         dispose();
         System.gc();
-        new GUI();
+        new WordleHelperGUI();
     }
 
     private static final String[] DBG_TITLE = {

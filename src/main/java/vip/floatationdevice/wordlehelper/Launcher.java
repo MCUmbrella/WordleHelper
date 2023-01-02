@@ -1,6 +1,6 @@
 package vip.floatationdevice.wordlehelper;
 
-import static vip.floatationdevice.wordlehelper.Common.PROGRAM_NAME;
+import static vip.floatationdevice.wordlehelper.WordleHelper.PROGRAM_NAME;
 
 public class Launcher
 {
@@ -11,7 +11,7 @@ public class Launcher
         startTime = System.currentTimeMillis();
         System.out.println(PROGRAM_NAME);
         if(args.length > 0 && args[0].equals("-c"))
-            CLI.main(args);
-        else GUI.main(args);
+            WordleHelperCLI.main(args);
+        else WordleHelperGUI.main(args);
     }
 }

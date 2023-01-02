@@ -4,10 +4,10 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import static vip.floatationdevice.wordlehelper.Common.answerWordsList;
-import static vip.floatationdevice.wordlehelper.Common.calculatePossibleWords;
+import static vip.floatationdevice.wordlehelper.WordleHelper.answerWordsList;
+import static vip.floatationdevice.wordlehelper.WordleHelper.calculatePossibleWords;
 
-public class CLI
+public class WordleHelperCLI
 {
     //scanner for input
     final static Scanner s = new Scanner(System.in);
@@ -25,8 +25,8 @@ public class CLI
         }
         try
         {
-            Common.readAnswerWords();
-            Common.readAllWords();
+            WordleHelper.readAnswerWords();
+            WordleHelper.readAllWords();
         }
         catch(Exception e)
         {
@@ -87,8 +87,7 @@ public class CLI
                 else
                 {
                     System.out.print("Invalid input. Try again? [y/N]\n? ");
-                    if(s.nextLine().equalsIgnoreCase("y")) continue;
-                    else
+                    if(!s.nextLine().equalsIgnoreCase("y"))
                     {
                         System.out.println("Exiting");
                         System.exit(0);
