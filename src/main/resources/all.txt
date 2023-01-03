@@ -1,6 +1,6 @@
 ##################################################
-# Wordle dictionary: all words
-# Update: 2022-09-20
+# NYT Wordle dictionary: all acceptable words
+# Update: 2023-01-03
 ##################################################
 cigar
 rebut

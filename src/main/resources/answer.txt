@@ -1,6 +1,6 @@
 ##################################################
-# Wordle dictionary: 2309 commonly used words
-# Update: 2022-09-20
+# NYT Wordle dictionary: 2309 answer words
+# Update: 2023-01-03
 ##################################################
 cigar
 rebut
