@@ -1,11 +1,9 @@
 package vip.floatationdevice.wordlehelper;
 
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-
-import static vip.floatationdevice.wordlehelper.WordleHelper.answerWordsList;
-import static vip.floatationdevice.wordlehelper.WordleHelper.calculatePossibleWords;
 
 public class WordleHelperCLI
 {
@@ -25,8 +23,7 @@ public class WordleHelperCLI
         }
         try
         {
-            WordleHelper.readAnswerWords();
-            WordleHelper.readAllWords();
+            WordleHelper.init();
         }
         catch(Exception e)
         {
@@ -61,26 +58,26 @@ public class WordleHelperCLI
             {
                 System.out.print("Enter check result (try " + (i + 1) + "/" + maxTries + "): ");
                 String input = s.nextLine().toLowerCase();
-                if(checkResult.matcher(input).find() && answerWordsList.contains(input.substring(0, 5))) //if the input is valid
+                if(checkResult.matcher(input).find() && WordleHelper.isValidWord(input.substring(0, 5))) //if the input is valid
                 {
                     String inputWord = input.substring(0, 5);
                     int[] result = new int[5];
                     for(int j = 0; j != 5; j++) result[j] = Integer.parseInt(input.substring(j + 6, j + 7));
-                    calculatePossibleWords(inputWord, result);
-                    if(answerWordsList.size() == 0)
+                    String[] remaining = WordleHelper.calculatePossibleWords(inputWord, result);
+                    if(remaining.length == 0)
                     {
                         System.out.println("No words left!\nIs there a:\n  · problem with your input?\n  · word that is not in the dictionary?\n  · bug in the program?");
                         System.exit(0);
                     }
-                    else if(answerWordsList.size() == 1)
+                    else if(remaining.length == 1)
                     {
-                        System.out.println("The word is: " + answerWordsList.get(0));
+                        System.out.println("The word is: " + remaining[0]);
                         System.exit(0);
                     }
                     else
                     {
-                        System.out.println("Possible words: " + answerWordsList);
-                        System.out.println("Words left: " + answerWordsList.size());
+                        System.out.println("Possible words: " + Arrays.toString(remaining));
+                        System.out.println("Words left: " + remaining.length);
                     }
                     i++;
                 }

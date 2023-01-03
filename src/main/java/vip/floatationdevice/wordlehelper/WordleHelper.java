@@ -23,13 +23,13 @@ public class WordleHelper
     private final static String allWordsFile = "/all.txt";
 
     // list of possible answer words (from answer.txt)
-    static LinkedList<String> answerWordsList = new LinkedList<>();
+    private static LinkedList<String> answerWordsList = new LinkedList<>();
 
     // list of all acceptable words (from all.txt)
-    static LinkedList<String> allWordsList = new LinkedList<>();
+    private final static LinkedList<String> allWordsList = new LinkedList<>();
 
     // read words from 'answer.txt' and store them in answerWordsList
-    public static void readAnswerWords() throws Exception
+    private static void readAnswerWords() throws Exception
     {
         InputStream is = WordleHelper.class.getResourceAsStream(answerWordsFile);
         if(is == null) throw new Exception("Could not read file '" + answerWordsFile + "'");
@@ -44,7 +44,7 @@ public class WordleHelper
     }
 
     // read words from 'all.txt' and store them in allWordsList
-    public static void readAllWords() throws Exception
+    private static void readAllWords() throws Exception
     {
         InputStream is = WordleHelper.class.getResourceAsStream(allWordsFile);
         if(is == null) throw new Exception("Could not read file '" + allWordsFile + "'");
@@ -59,7 +59,47 @@ public class WordleHelper
     }
 
     /**
+     * get the String array containing the remaining answer words
+     */
+    public static String[] getRemainingWords()
+    {
+        String[] remaining = new String[answerWordsList.size()];
+        int i = 0;
+        for(String s : answerWordsList)
+        {
+            remaining[i] = s;
+            i++;
+        }
+        return remaining;
+    }
+
+    /**
+     * initialize or reset WordleHelper
+     * @return the initial answer words array
+     * @throws Exception when fail to read dictionary or something else happen
+     */
+    public static String[] init() throws Exception
+    {
+        if(allWordsList.size() == 0) readAllWords();
+        answerWordsList.clear();
+        readAnswerWords();
+        return getRemainingWords();
+    }
+
+    /**
+     * check if the provided string is in the acceptable words' dictionary.
+     * @param s the string to be checked
+     * @return true if the string is a valid word, false otherwise
+     */
+    public static boolean isValidWord(String s)
+    {
+        return allWordsList.contains(s);
+    }
+
+    /**
      * calculate the possible words
+     * @return the String array that contains the remaining words
+     * @throws IllegalStateException when the remaining answer words is less than 2
      */
     public static String[] calculatePossibleWords(String inputWord, int[] result)
     {

@@ -85,11 +85,10 @@ public class WordleHelperGUI extends JFrame
         //load answer dictionary and all words dictionary
         try
         {
-            readAnswerWords();
-            readAllWords();
-            wordsLeftLabel.setText("Answer words left: " + answerWordsList.size());
+            String[] remaining = init();
+            wordsLeftLabel.setText("Answer words left: " + remaining.length);
             //show all words at first
-            possibleWordsField.append(answerWordsList.toString());
+            possibleWordsField.append(Arrays.toString(remaining));
         }
         catch(Exception e)
         {
@@ -257,7 +256,7 @@ public class WordleHelperGUI extends JFrame
                             tt.setBorder(BorderFactory.createLineBorder(Color.red));
                     helpButton.setBorder(BorderFactory.createLineBorder(Color.red));
                     resetButton.setBorder(BorderFactory.createLineBorder(Color.red));
-                    System.out.println(answerWordsList);
+                    System.out.println(Arrays.toString(getRemainingWords()));
                     JOptionPane.showMessageDialog(WordleHelperGUI.this,
                             "Created by MCUmbrella (https://github.com/MCUmbrella)\n" +
                                     "This software is licensed under the MIT license and provided with absolutely no warranty.\n" +
@@ -294,11 +293,11 @@ public class WordleHelperGUI extends JFrame
                                     {
                                         //this line has reached the end, update possible words
                                         System.out.println("update possible words: " + getWord(letterIndexLine) + " " + Arrays.toString(getResultNumbers(numberIndexLine)));
-                                        calculatePossibleWords(getWord(letterIndexLine), getResultNumbers(numberIndexLine));
-                                        possibleWordsField.setText("Possible words:\n" + answerWordsList);
-                                        wordsLeftLabel.setText("Answer words left: " + answerWordsList.size());
-                                        //if ArrayList is empty, the game is over
-                                        if(answerWordsList.size() == 0)
+                                        String[] remaining = calculatePossibleWords(getWord(letterIndexLine), getResultNumbers(numberIndexLine));
+                                        possibleWordsField.setText("Possible words:\n" + Arrays.toString(remaining));
+                                        wordsLeftLabel.setText("Answer words left: " + remaining.length);
+                                        //if remaining words list is empty, the game is over
+                                        if(remaining.length == 0)
                                         {
                                             KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(keyEventDispatcher);
                                             triesLabel.setText("Try " + ++tries + " / 6");
@@ -314,16 +313,16 @@ public class WordleHelperGUI extends JFrame
                                             );
                                             resetGUI();
                                         }
-                                        //if ArrayList has only one word, that word is the result
-                                        else if(answerWordsList.size() == 1)
+                                        //if remaining words has only one word left, that word is the result
+                                        else if(remaining.length == 1)
                                         {
                                             KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(keyEventDispatcher);
                                             triesLabel.setText("Try " + ++tries + " / 6");
-                                            wordsLeftLabel.setText("Answer word: " + answerWordsList.get(0));
+                                            wordsLeftLabel.setText("Answer word: " + remaining[0]);
                                             wordsLeftLabel.setForeground(Color.GREEN);
-                                            System.out.println("only one word left: " + answerWordsList.get(0));
+                                            System.out.println("only one word left: " + remaining[0]);
                                             JOptionPane.showMessageDialog(null,
-                                                    "The word we are finding is:\n\n  · " + answerWordsList.get(0) + "\n\nThe program will reset",
+                                                    "The word we are finding is:\n\n  · " + remaining[0] + "\n\nThe program will reset",
                                                     "Congratulations!",
                                                     JOptionPane.INFORMATION_MESSAGE
                                             );
@@ -375,7 +374,7 @@ public class WordleHelperGUI extends JFrame
                                     letterIndexColumn++;
                                     if(letterIndexColumn == 5)//check if the word is in the dictionary
                                     {
-                                        if(allWordsList.contains(getWord(letterIndexLine)))
+                                        if(isValidWord(getWord(letterIndexLine)))
                                         {
                                             //move to the first letter and start setting the numbers
                                             letterIndexColumn = 0;
@@ -407,8 +406,6 @@ public class WordleHelperGUI extends JFrame
     {
         System.out.println("resetting");
         KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(keyEventDispatcher);
-        answerWordsList.clear();
-        allWordsList.clear();
         windowX = getX();
         windowY = getY();
         dispose();
