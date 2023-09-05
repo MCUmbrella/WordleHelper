@@ -14,13 +14,13 @@ public class WordleHelper
     public final static String PROGRAM_NAME = "WordleHelper 2.4.0";
 
     // regex: 5 letters
-    private final static Pattern validWord = Pattern.compile("^[a-zA-Z]{5}$");
+    private final static Pattern VALID_WORD = Pattern.compile("^[a-zA-Z]{5}$");
 
     // answer words file 'answer.txt' in the jar
-    private final static String answerWordsFile = "/answer.txt";
+    private final static String ANSWER_WORDS_PATH = "/answer.txt";
 
     // all words file 'all.txt' in the jar
-    private final static String allWordsFile = "/all.txt";
+    private final static String ALL_WORDS_PATH = "/all.txt";
 
     // list of possible answer words (from answer.txt)
     private static LinkedList<String> answerWordsList = new LinkedList<>();
@@ -31,12 +31,12 @@ public class WordleHelper
     // read words from 'answer.txt' and store them in answerWordsList
     private static void readAnswerWords() throws Exception
     {
-        InputStream is = WordleHelper.class.getResourceAsStream(answerWordsFile);
-        if(is == null) throw new Exception("Could not read file '" + answerWordsFile + "'");
+        InputStream is = WordleHelper.class.getResourceAsStream(ANSWER_WORDS_PATH);
+        if(is == null) throw new Exception("Could not read file '" + ANSWER_WORDS_PATH + "'");
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader reader = new BufferedReader(isr);
         for(String line = reader.readLine(); line != null; line = reader.readLine())
-            if(validWord.matcher(line).find()) answerWordsList.add(line.toLowerCase());
+            if(VALID_WORD.matcher(line).find()) answerWordsList.add(line.toLowerCase());
         reader.close();
         isr.close();
         is.close();
@@ -46,12 +46,12 @@ public class WordleHelper
     // read words from 'all.txt' and store them in allWordsList
     private static void readAllWords() throws Exception
     {
-        InputStream is = WordleHelper.class.getResourceAsStream(allWordsFile);
-        if(is == null) throw new Exception("Could not read file '" + allWordsFile + "'");
+        InputStream is = WordleHelper.class.getResourceAsStream(ALL_WORDS_PATH);
+        if(is == null) throw new Exception("Could not read file '" + ALL_WORDS_PATH + "'");
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader reader = new BufferedReader(isr);
         for(String line = reader.readLine(); line != null; line = reader.readLine())
-            if(validWord.matcher(line).find()) allWordsList.add(line.toLowerCase());
+            if(VALID_WORD.matcher(line).find()) allWordsList.add(line.toLowerCase());
         reader.close();
         isr.close();
         is.close();
