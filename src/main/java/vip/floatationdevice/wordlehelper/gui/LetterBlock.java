@@ -3,19 +3,29 @@ package vip.floatationdevice.wordlehelper.gui;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Represents a letter in the Wordle game.
+ * Part of WordleHelperGUI.
+ */
 public class LetterBlock extends JLabel
 {
-    //wordle letter block background colors
+    /** used to represent the different check results of a letter */
     public final static Color
             COLOR_UNSET = new Color(0x121213),
-            COLOR_OFF_TARGETED = new Color(0x3a3a3c),
-            COLOR_DISPLACED = new Color(0xb59f3b),
+            COLOR_MISS = new Color(0x3a3a3c),
+            COLOR_MISPLACED = new Color(0xb59f3b),
             COLOR_HIT = new Color(0x538d4e);
+
+    /**
+     * the check result associated with the letter.
+     * -1: unset, 0: miss, 1: hit, 2: misplaced
+     */
     int number;
 
     public LetterBlock()
     {
         setText("_");
+        setSize(50, 50);
         setFont(new Font(getFont().getName(), Font.BOLD, getFont().getSize() + 10));
         setNumber(-1);
         setHorizontalAlignment(JLabel.CENTER);
@@ -24,11 +34,20 @@ public class LetterBlock extends JLabel
         setOpaque(true);
     }
 
+    /**
+     * Get the check status of the letter.
+     * @return -1, 0, 1 or 2.
+     */
     public int getNumber()
     {
         return number;
     }
 
+    /**
+     * Set the check result of the letter.
+     * @param number -1, 0, 1 or 2.
+     * @throws IllegalArgumentException when setting something else.
+     */
     public void setNumber(int number)
     {
         this.number = number;
@@ -41,7 +60,7 @@ public class LetterBlock extends JLabel
             }
             case 0:
             {
-                setBackground(COLOR_OFF_TARGETED);
+                setBackground(COLOR_MISS);
                 break;
             }
             case 1:
@@ -51,7 +70,7 @@ public class LetterBlock extends JLabel
             }
             case 2:
             {
-                setBackground(COLOR_DISPLACED);
+                setBackground(COLOR_MISPLACED);
                 break;
             }
             default:
